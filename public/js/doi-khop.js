@@ -26,6 +26,7 @@ function veCa(c, duocGhi) {
     : kl ? `<div class="hint">Nguyên nhân: ${TEN_NGUYEN_NHAN[kl.nguyen_nhan]}${kl.de_xuat_sua ? ' · Đề xuất: ' + sach(kl.de_xuat_sua) : ''}</div>` : '<div class="hint">Hai em chưa ghi kết luận.</div>';
   return `<div class="case">
     <div class="vs"><span class="code">${c.ma}</span><span class="tag">${[TEN_BOI_CANH[c.boi_canh], sach(c.mon)].filter(Boolean).join(' · ')}</span>${kl ? `<span style="margin-left:auto">Thống nhất ${vien(kl.mau_thong_nhat)}</span>` : ''}</div>
+    ${c.nhiem_vu ? `<div class="hint">Tình huống được giao: ${sach(c.nhiem_vu)}</div>` : ''}
     <div class="quote">${sach(c.noi_dung)}</div>
     <div class="scroll"><table><tr><th></th><th>HS1 ${c.hs1.ca_kho ? '★' : ''}</th><th>HS2 ${c.hs2.ca_kho ? '★' : ''}</th></tr>${hang}<tr><th>Màu cuối</th><td>${mauCuoi(c.hs1)}</td><td>${mauCuoi(c.hs2)}</td></tr></table></div>
     <div class="hint">HS1: ${sach(c.hs1.ly_do)}</div><div class="hint">HS2: ${sach(c.hs2.ly_do)}</div>

@@ -7,6 +7,7 @@ import { khoiDongNhom, layVai, dangXuat, veQuanLy } from './nhom.js';
 import { khoiDongPhanLoai, vePhanLoai } from './phan-loai.js';
 import { khoiDongLamSach, veLamSach } from './lam-sach.js';
 import { veDoiKhop } from './doi-khop.js';
+import { khoiDongTinhHuong, veTinhHuong } from './tinh-huong.js';
 
 export const $ = s => document.querySelector(s);
 export const $$ = s => [...document.querySelectorAll(s)];
@@ -59,6 +60,7 @@ const THE_NHOM = [
   ['phan-loai', 'Phân loại', ['GV', 'HS1', 'HS2'], vePhanLoai],
   ['lam-sach', 'Làm sạch', ['GV', 'HS1'], veLamSach],
   ['doi-khop', 'Đối khớp', ['GV', 'HS1', 'HS2'], veDoiKhop],
+  ['tinh-huong', 'Tình huống', ['GV', 'HS1', 'HS2'], veTinhHuong],
   ['quan-ly', 'Quản lý', ['GV'], veQuanLy]
 ];
 
@@ -74,7 +76,7 @@ export function chuyenTrang() {
   $$('section.view').forEach(s => (s.hidden = s.dataset.view !== t));
   const trangNhom = THE_NHOM.find(([ma]) => ma === t);
   const the = trangNhom
-    ? [...THE_NHOM.filter(x => x[2].includes(vai)), ['kiem-tra', 'Trang HS']]
+    ? THE_NHOM.filter(x => x[2].includes(vai)) // muốn về trang của HS thì bấm tên app ở góc trên
     : THE_CHUNG;
   $('#tabs').innerHTML = the.map(([ma, ten]) => `<a href="#${ma}" ${ma === t ? 'aria-current="page"' : ''}>${ten}</a>`).join('');
   $('#who').innerHTML = vai ? `${vai} · <button id="out">Thoát</button>` : 'Ẩn danh';
@@ -93,5 +95,6 @@ khoiDongGopPrompt();
 khoiDongKhaoSat();
 khoiDongPhanLoai();
 khoiDongLamSach();
+khoiDongTinhHuong();
 $$('[data-dot] button').forEach(n => (n.onclick = () => { nhom.dot = Number(n.dataset.v); chuyenTrang(); }));
 khoiDongNhom().then(chuyenTrang);

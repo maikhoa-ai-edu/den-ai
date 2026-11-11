@@ -4,19 +4,32 @@ Webapp của dự án Khoa học kỹ thuật **"Hỏi để hiểu hay hỏi đ
 
 App giúp học sinh xem một câu hỏi gửi AI nên bật đèn **xanh, vàng hay đỏ** theo bộ tiêu chí Đèn tín hiệu AI, và giúp nhóm nghiên cứu thu câu hỏi ẩn danh.
 
-## Bản 0.3 có gì
+## Bản 0.4 có gì
 
 | Trang | Ai dùng | Việc làm được |
 | --- | --- | --- |
 | Kiểm tra | Mọi người | Dán câu hỏi, chọn bối cảnh và môn, xem màu đèn và màu từng tiêu chí TC1, TC2, TC3, TC5. Đang chấm bằng **luật tạm** (dò từ khóa). |
-| Góp prompt | Mọi người | Gửi một câu hỏi ẩn danh kèm khối, bối cảnh, môn. Chặn số điện thoại, email, tên riêng. Mỗi trình duyệt gửi một câu mỗi đợt. |
+| Góp prompt | Mọi người | Hai kiểu thu, thầy chọn cho từng đợt. **Giao tình huống:** app phát cho mỗi em một nhiệm vụ học tập, em chọn công cụ AI và gõ câu lệnh em sẽ gửi. **Câu đã từng hỏi:** em chép lại một câu đã hỏi AI kèm bối cảnh, môn. Chặn số điện thoại, email, tên riêng. Mỗi trình duyệt gửi một câu mỗi đợt. |
 | Khảo sát | Mọi người | Hai nút mở Google Forms (phiếu trước và phiếu sau) ở thẻ mới. |
 | Làm sạch | HS1, GV | Rà từng câu đã góp: Hợp lệ hoặc Loại kèm lý do. Không xóa câu nào. |
 | Phân loại | HS1, HS2 | Chấm 4 tiêu chí cho từng câu Hợp lệ, màu cuối là màu xấu nhất, ô Đỏ tuyệt đối, lý do, đánh dấu ca khó. Chấm hết thì khóa. GV chỉ xem tiến độ. |
 | Đối khớp | HS1, HS2, GV | Chỉ mở khi cả hai em đã khóa. Tỷ lệ đồng thuận, Cohen's kappa, ma trận 3×3, số câu chấm giống nhau theo từng tiêu chí, danh sách ca lệch. Hai em ghi nguyên nhân, đề xuất sửa tiêu chí, màu thống nhất. GV chỉ xem. |
-| Quản lý | GV | Mở, đóng đợt thu; số prompt cần thu; link hai phiếu khảo sát; phiên bản tiêu chí. |
+| Tình huống | HS1, HS2, GV | Ngân hàng tình huống: thêm, sửa, bật, tắt. Tình huống đã có câu trả lời thì chỉ bật hoặc tắt được. |
+| Quản lý | GV | Mở, đóng đợt thu; kiểu thu của từng đợt; số prompt cần thu; link hai phiếu khảo sát; phiên bản tiêu chí. |
 
 Chưa có: AI chấm thứ ba, Số liệu, Nhật ký, chế độ Giáo viên của trang Kiểm tra.
+
+## Hai kiểu thu prompt
+
+| | Giao tình huống | Câu đã từng hỏi |
+| --- | --- | --- |
+| Dữ liệu là | Câu HS **sẽ** gửi khi gặp nhiệm vụ đó | Câu HS **đã** gửi thật |
+| Dùng cho | Đợt 1: thử bộ tiêu chí, phủ đều môn và bối cảnh | Đợt 2: mô tả hành vi dùng AI thật |
+| Bối cảnh, môn | Lấy từ tình huống, do máy chủ ghi | HS tự chọn |
+
+- App phát tình huống đang có ít câu trả lời nhất trong đợt, nên các tình huống được chia đều.
+- HS chọn "Em không dùng AI cho việc này" thì dòng đó vẫn được ghi để đếm, nhưng không vào danh sách chấm và không tính vào tiến độ.
+- Mỗi prompt lưu kèm kiểu thu (`kieu_thu`), nên hai loại dữ liệu không lẫn vào nhau khi phân tích.
 
 ## Tính độc lập của hai bộ mã
 
@@ -48,6 +61,7 @@ public/                  Phần chạy trên trình duyệt
   js/lam-sach.js         Trang Làm sạch
   js/phan-loai.js        Trang Phân loại
   js/doi-khop.js         Trang Đối khớp
+  js/tinh-huong.js       Trang Tình huống
   js/chung/luat-tam.js         Luật chấm tạm theo tiêu chí v0.1
   js/chung/thong-ke.js         Tỷ lệ đồng thuận, Cohen's kappa, ma trận
   js/chung/chan-thong-tin.js   Phát hiện thông tin cá nhân (trình duyệt và máy chủ dùng chung)
@@ -57,6 +71,7 @@ api/                     Hàm Node.js chạy trên máy chủ Vercel
   phien.js               Đăng nhập, đăng xuất
   lam-sach.js            Danh sách câu và đổi trạng thái
   phan-loai.js           Lấy câu cần chấm, lưu kết quả, khóa
+  tinh-huong.js          Phát tình huống cho HS; quản lý ngân hàng tình huống
   doi-khop.js            Số liệu đồng thuận, ca lệch, ghi kết luận
   cau-hinh.js            Đọc, sửa cấu hình (GV)
   _lib/db.js             Chọn nơi lưu: Supabase hoặc bộ nhớ tạm khi chạy thử
@@ -64,7 +79,7 @@ api/                     Hàm Node.js chạy trên máy chủ Vercel
   _lib/db-tam.js         Bộ nhớ tạm khi chạy thử trên máy
   _lib/phien.js          Kiểm tra mật khẩu, cấp và đọc vé đăng nhập
   _lib/http.js           Hàm tiện dùng chung
-supabase/                Lệnh tạo bảng, chạy theo thứ tự 001, 002, 003
+supabase/                Lệnh tạo bảng, chạy theo thứ tự 001 đến 004
 scripts/chay-thu.js      Máy chủ thử trên máy cá nhân
 test/                    Kiểm tra tự động cho luật và công thức kappa
 docs/TRIEN-KHAI.md       Hướng dẫn đưa app lên mạng

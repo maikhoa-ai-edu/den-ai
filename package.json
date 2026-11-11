@@ -1,6 +1,6 @@
 {
   "name": "den-ai",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "description": "Webapp Đèn AI – dự án KHKT \"Hỏi để hiểu hay hỏi để chép?\", Trường THCS&THPT Vĩnh Phong",
   "type": "module",

@@ -78,8 +78,25 @@ Chỉ một bước: **Supabase > SQL Editor**, dán toàn bộ `supabase/003_do
 
 Kiểm tra: đăng nhập bất kỳ tài khoản nào > thẻ Đối khớp. Khi chưa đủ hai em khóa, trang hiện "Chưa mở" và cho biết em nào đã khóa.
 
+## Nâng lên bản 0.4 (giao tình huống)
+
+Chỉ một bước, nhưng **phải làm ngay sau khi Vercel triển khai bản 0.4**: Supabase > SQL Editor, dán toàn bộ `supabase/004_tinh_huong.sql`, bấm Run. Chưa chạy tệp này thì các trang Góp prompt, Làm sạch, Phân loại, Đối khớp báo "Máy chủ đang gặp lỗi".
+
+Tệp này tạo bảng `tinh_huong`, thêm 3 cột vào bảng `prompt` và chèn 12 tình huống khởi thảo.
+
+| Việc kiểm tra | Kết quả đúng |
+| --- | --- |
+| Đăng nhập > thẻ Tình huống | Thấy 12 tình huống, đều "Đang phát", 0 câu trả lời |
+| Quản lý | Đợt 1: Giao tình huống; đợt 2: Câu đã từng hỏi |
+| Mở đợt 1, vào thẻ Góp prompt bằng trình duyệt khác, chọn khối | Hiện một tình huống, ô chọn công cụ AI và ô gõ câu lệnh |
+| Tải lại trang | Vẫn đúng tình huống đó |
+| Gửi một câu, rồi xem thẻ Làm sạch | Câu vừa gửi kèm dòng "Tình huống được giao" |
+
+Xong thì đánh dấu Loại các câu thử (ghi lý do "câu thử của nhóm") trước khi mở cho học sinh.
+
 ## Quy trình chấm một đợt
 
+0. Đợt giao tình huống: nhóm rà ngân hàng tình huống ở trang Tình huống trước khi mở. Sau khi có câu trả lời, nội dung tình huống không sửa được.
 1. GV mở đợt ở trang Quản lý; HS góp câu hỏi.
 2. Đủ số thì GV đóng đợt.
 3. HS1 rà hết ở trang Làm sạch (không còn câu "Chưa rà").

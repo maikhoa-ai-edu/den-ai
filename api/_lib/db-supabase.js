@@ -54,7 +54,7 @@ export async function themPrompt(dong) {
 }
 
 // ---------- prompt (khu nhóm) ----------
-const COT_PROMPT = 'id, dot, khoi, boi_canh, mon, noi_dung, can_ra, trang_thai, ly_do_loai';
+const COT_PROMPT = 'id, dot, khoi, boi_canh, mon, noi_dung, can_ra, trang_thai, ly_do_loai, kieu_thu, tinh_huong_id, cong_cu_ai';
 export async function dsPrompt(dot) {
   const { data } = lay(await sb().from('prompt').select(COT_PROMPT).eq('dot', dot).eq('nguon', 'gop').order('id'));
   return data;
@@ -89,4 +89,22 @@ export async function dsDoiKhop(dot) {
 }
 export async function luuDoiKhop(dong) {
   lay(await sb().from('doi_khop').upsert({ ...dong, cap_nhat_luc: new Date().toISOString() }, { onConflict: 'prompt_id' }));
+}
+
+// ---------- tình huống ----------
+export async function dsTinhHuong() {
+  return lay(await sb().from('tinh_huong').select('id, mon, khoi, boi_canh, nhiem_vu, bat').order('id')).data;
+}
+export async function luuTinhHuong(dong) {
+  const { id, ...cot } = dong;
+  if (id) lay(await sb().from('tinh_huong').update(cot).eq('id', id));
+  else lay(await sb().from('tinh_huong').insert(cot));
+}
+// Mỗi tình huống đã có bao nhiêu câu trả lời. dot = null thì đếm mọi đợt.
+export async function demTheoTinhHuong(dot) {
+  let q = sb().from('prompt').select('tinh_huong_id').not('tinh_huong_id', 'is', null);
+  if (dot) q = q.eq('dot', dot);
+  const dem = new Map();
+  for (const d of lay(await q).data) dem.set(d.tinh_huong_id, (dem.get(d.tinh_huong_id) || 0) + 1);
+  return dem;
 }

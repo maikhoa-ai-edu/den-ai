@@ -7,7 +7,7 @@
 // Kết quả chấm độc lập ban đầu không bị sửa; kết luận sau khi bàn được ghi ở bảng riêng.
 
 import { doiChieu } from '../public/js/chung/thong-ke.js';
-import { dsPrompt, dsPhanLoai, dsKhoa, dsDoiKhop, luuDoiKhop } from './_lib/db.js';
+import { dsPrompt, dsPhanLoai, dsKhoa, dsDoiKhop, luuDoiKhop, dsTinhHuong } from './_lib/db.js';
 import { docThan, baoLoiMayChu, maPrompt } from './_lib/http.js';
 import { canVai } from './_lib/phien.js';
 
@@ -54,6 +54,7 @@ export default async function handler(req, res) {
     if (req.method !== 'GET') return res.status(405).json({ loi: 'Phương thức không được hỗ trợ.' });
 
     const tk = doiChieu(cap.map(c => [c.a.mau_cuoi, c.b.mau_cuoi]));
+    const nhiemVu = new Map((await dsTinhHuong()).map(t => [t.id, t.nhiem_vu]));
     const ketLuan = new Map((await dsDoiKhop(dot)).map(d => [d.prompt_id, d]));
     res.status(200).json({
       ok: true, dot, mo: true,
@@ -64,7 +65,7 @@ export default async function handler(req, res) {
       ca_lech: lech.map(c => {
         const kl = ketLuan.get(c.p.id);
         return {
-          id: c.p.id, ma: maPrompt(c.p.id), noi_dung: c.p.noi_dung, boi_canh: c.p.boi_canh, mon: c.p.mon,
+          id: c.p.id, ma: maPrompt(c.p.id), noi_dung: c.p.noi_dung, boi_canh: c.p.boi_canh, mon: c.p.mon, nhiem_vu: nhiemVu.get(c.p.tinh_huong_id) || '',
           hs1: rutGon(c.a), hs2: rutGon(c.b),
           ket_luan: kl ? { nguyen_nhan: kl.nguyen_nhan, de_xuat_sua: kl.de_xuat_sua, mau_thong_nhat: kl.mau_thong_nhat, nguoi_ghi: kl.nguoi_ghi } : null
         };

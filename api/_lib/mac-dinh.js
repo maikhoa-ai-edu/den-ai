@@ -6,7 +6,9 @@ export const CAU_HINH_MAC_DINH = {
   link_khao_sat_truoc: '',
   link_khao_sat_sau: '',
   gioi_han_5_phut: '60',
-  phien_ban_tieu_chi: 'v0.1'
+  phien_ban_tieu_chi: 'v0.1',
+  kieu_dot_1: 'tinh_huong', // tinh_huong = giao tình huống; tu_do = HS góp câu đã từng hỏi
+  kieu_dot_2: 'tu_do'
 };
 
 // Trên Vercel luôn dùng Supabase. Chỉ khi chạy thử trên máy cá nhân và chưa khai báo

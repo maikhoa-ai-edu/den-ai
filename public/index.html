@@ -12,7 +12,7 @@
 </head>
 <body>
 <header class="top"><div class="wrap">
-  <div class="brand"><span class="lamp all" aria-hidden="true"><i></i><i></i><i></i></span><span>Đèn AI<small>Hỏi để hiểu hay hỏi để chép?</small></span></div>
+  <a class="brand" href="#kiem-tra"><span class="lamp all" aria-hidden="true"><i></i><i></i><i></i></span><span>Đèn AI<small>Hỏi để hiểu hay hỏi để chép?</small></span></a>
   <span class="who" id="who">Ẩn danh</span>
 </div></header>
 
@@ -71,8 +71,8 @@
 
 <!-- ============ GÓP PROMPT ============ -->
 <section class="view wrap" data-view="gop-prompt" hidden>
-  <h1>Góp một câu em từng hỏi AI</h1>
-  <p class="lead">Không cần đăng nhập, không ghi tên. Nhóm nghiên cứu chỉ dùng câu hỏi để thử bộ tiêu chí Đèn tín hiệu. Mỗi bạn góp một câu.</p>
+  <h1 id="gp-h1">Góp một câu em từng hỏi AI</h1>
+  <p class="lead">Không cần đăng nhập, không ghi tên. Nhóm nghiên cứu chỉ dùng câu lệnh để thử bộ tiêu chí Đèn tín hiệu. Mỗi bạn góp một câu.</p>
   <div class="card" id="gp-progress" hidden>
     <div class="meter"><span id="gp-round"></span><span><b id="gp-n">0</b> / <span id="gp-goal">0</span></span></div>
     <div class="prog"><b id="gp-bar" style="width:0"></b></div>
@@ -80,29 +80,49 @@
   <div class="card" id="gp-closed" hidden><h2>Chưa mở đợt góp câu hỏi</h2><p class="hint">Nhóm nghiên cứu sẽ mở khi phát phiếu cho lớp em. Em quay lại sau nhé.</p></div>
   <div class="card" id="gp-done" hidden><h2>Cảm ơn em đã góp câu hỏi</h2><p class="hint">Câu hỏi đã được ghi nhận ẩn danh. Mỗi bạn chỉ góp một câu trong mỗi đợt. Em có thể thử công cụ ở thẻ Kiểm tra.</p></div>
   <div class="card" id="gp-form" hidden>
-    <label class="f" for="gp-prompt">Một câu em từng hỏi AI (chép gần đúng)
-      <textarea id="gp-prompt" maxlength="1000" placeholder="Ví dụ: Giải thích cung cầu bằng ví dụ bán xoài"></textarea></label>
-    <div class="warn" id="gp-warn" hidden></div>
-    <div class="plain" id="gp-soft" hidden>
-      <div class="warn" id="gp-soft-text"></div>
-      <button class="btn ghost" id="gp-soft-ok">Không có tên người thật, vẫn gửi</button>
-    </div>
     <div class="plain"><span class="lbl">Em học khối</span>
       <div class="chips" id="gp-khoi">
         <button class="chip" data-v="10" aria-pressed="false">Khối 10</button>
         <button class="chip" data-v="11" aria-pressed="false">Khối 11</button>
         <button class="chip" data-v="12" aria-pressed="false">Khối 12</button>
       </div></div>
-    <div class="plain"><span class="lbl">Lúc đó em đang</span>
-      <div class="chips" id="gp-ctx">
-        <button class="chip" data-v="tuhoc" aria-pressed="false">Tự học</button>
-        <button class="chip" data-v="venha" aria-pressed="false">Làm bài về nhà</button>
-        <button class="chip" data-v="duan" aria-pressed="false">Làm dự án</button>
-        <button class="chip" data-v="kiemtra" aria-pressed="false">Kiểm tra</button>
-        <button class="chip" data-v="khac" aria-pressed="false">Việc khác</button>
-      </div></div>
-    <label class="f" for="gp-mon">Môn<input type="text" id="gp-mon" maxlength="40" placeholder="Ví dụ: Toán"></label>
-    <p class="hint">Không ghi tên em. Không ghi tên bạn bè, thầy cô, địa chỉ, số điện thoại trong câu hỏi. Tham gia là tự nguyện, không ảnh hưởng điểm số.</p>
+
+    <!-- Kiểu "giao tình huống": hiện sau khi HS chọn khối -->
+    <div class="plain" id="gp-th" hidden>
+      <span class="tag" id="gp-th-tag"></span>
+      <div class="quote" id="gp-th-text"></div>
+      <p class="hint">Giả sử em gặp đúng việc này. Em gõ đúng câu em sẽ gửi cho AI, như lúc bình thường. Không có câu đúng hay sai, không ai biết câu này của em.</p>
+      <div class="plain"><span class="lbl">Em sẽ dùng công cụ AI nào?</span>
+        <div class="chips" id="gp-tool">
+          <button class="chip" data-v="chatgpt" aria-pressed="false">ChatGPT</button>
+          <button class="chip" data-v="gemini" aria-pressed="false">Gemini</button>
+          <button class="chip" data-v="copilot" aria-pressed="false">Copilot</button>
+          <button class="chip" data-v="khac" aria-pressed="false">Công cụ khác</button>
+          <button class="chip" data-v="khong_dung" aria-pressed="false">Em không dùng AI cho việc này</button>
+        </div></div>
+    </div>
+
+    <label class="f" for="gp-prompt" id="gp-prompt-box"><span id="gp-prompt-label">Một câu em từng hỏi AI (chép gần đúng)</span>
+      <textarea id="gp-prompt" maxlength="1000" placeholder="Ví dụ: Giải thích cung cầu bằng ví dụ bán xoài"></textarea></label>
+    <div class="warn" id="gp-warn" hidden></div>
+    <div class="plain" id="gp-soft" hidden>
+      <div class="warn" id="gp-soft-text"></div>
+      <button class="btn ghost" id="gp-soft-ok">Không có tên người thật, vẫn gửi</button>
+    </div>
+
+    <!-- Kiểu "câu đã từng hỏi": HS tự chọn bối cảnh và môn -->
+    <div class="plain" id="gp-free">
+      <div class="plain"><span class="lbl">Lúc đó em đang</span>
+        <div class="chips" id="gp-ctx">
+          <button class="chip" data-v="tuhoc" aria-pressed="false">Tự học</button>
+          <button class="chip" data-v="venha" aria-pressed="false">Làm bài về nhà</button>
+          <button class="chip" data-v="duan" aria-pressed="false">Làm dự án</button>
+          <button class="chip" data-v="kiemtra" aria-pressed="false">Kiểm tra</button>
+          <button class="chip" data-v="khac" aria-pressed="false">Việc khác</button>
+        </div></div>
+      <label class="f" for="gp-mon">Môn<input type="text" id="gp-mon" maxlength="40" placeholder="Ví dụ: Toán"></label>
+    </div>
+    <p class="hint">Không ghi tên em. Không ghi tên bạn bè, thầy cô, địa chỉ, số điện thoại trong câu lệnh. Tham gia là tự nguyện, không ảnh hưởng điểm số.</p>
     <button class="btn" id="gp-send">Gửi ẩn danh</button>
   </div>
 </section>
@@ -156,6 +176,7 @@
   <div class="card" id="pl-note" hidden><h2 id="pl-note-title"></h2><p class="hint" id="pl-note-text"></p><button class="btn" id="pl-lock" hidden>Khóa kết quả của em</button></div>
   <div class="card" id="pl-card" hidden>
     <div class="head"><span class="code" id="pl-code"></span><span class="tag" id="pl-ctx"></span></div>
+    <p class="hint" id="pl-task" hidden></p>
     <div class="quote" id="pl-text"></div>
     <div id="pl-picks"></div>
     <div class="pick"><div class="n">TC4. Minh bạch, kiểm chứng<small>Chỉ có câu lệnh, chưa có kết quả</small></div><span class="pill na">Không chấm</span></div>
@@ -198,6 +219,35 @@
   <div id="ls-list" class="plain"></div>
 </section>
 
+<!-- ============ TÌNH HUỐNG ============ -->
+<section class="view wrap" data-view="tinh-huong" hidden>
+  <h1>Ngân hàng tình huống</h1>
+  <p class="lead">Mỗi học sinh nhận một tình huống và gõ câu lệnh em sẽ gửi cho AI. App phát tình huống đang có ít câu trả lời nhất, nên các tình huống được chia đều. Tình huống đã có câu trả lời thì chỉ bật hoặc tắt được, không sửa nội dung.</p>
+  <div class="card" id="th-form">
+    <h2 id="th-form-title">Thêm tình huống</h2>
+    <label class="f" for="th-mon">Môn<input type="text" id="th-mon" maxlength="40" placeholder="Ví dụ: Toán"></label>
+    <div class="plain"><span class="lbl">Dùng cho</span>
+      <div class="chips" id="th-khoi">
+        <button class="chip" data-v="0" aria-pressed="true">Mọi khối</button>
+        <button class="chip" data-v="10" aria-pressed="false">Khối 10</button>
+        <button class="chip" data-v="11" aria-pressed="false">Khối 11</button>
+        <button class="chip" data-v="12" aria-pressed="false">Khối 12</button>
+      </div></div>
+    <div class="plain"><span class="lbl">Bối cảnh</span>
+      <div class="chips" id="th-ctx">
+        <button class="chip" data-v="tuhoc" aria-pressed="false">Tự học</button>
+        <button class="chip" data-v="venha" aria-pressed="false">Bài về nhà</button>
+        <button class="chip" data-v="duan" aria-pressed="false">Dự án</button>
+        <button class="chip" data-v="kiemtra" aria-pressed="false">Kiểm tra</button>
+        <button class="chip" data-v="khac" aria-pressed="false">Việc khác</button>
+      </div></div>
+    <label class="f" for="th-nv">Nhiệm vụ (viết như lời thầy cô giao hoặc việc em gặp, không gợi ý cách hỏi AI)
+      <textarea id="th-nv" maxlength="500"></textarea></label>
+    <div class="rowbtn"><button class="btn sm" id="th-save">Lưu tình huống</button><button class="btn ghost sm" id="th-cancel" hidden>Bỏ sửa</button></div>
+  </div>
+  <div id="th-list" class="plain"></div>
+</section>
+
 <!-- ============ QUẢN LÝ (GV) ============ -->
 <section class="view wrap" data-view="quan-ly" hidden>
   <h1>Quản lý đợt thu</h1>
@@ -209,6 +259,17 @@
         <button class="chip" data-v="1" aria-pressed="false">Mở đợt 1 · thử</button>
         <button class="chip" data-v="2" aria-pressed="false">Mở đợt 2 · chính thức</button>
       </div></div>
+    <div class="plain"><span class="lbl">Đợt 1 thu theo kiểu</span>
+      <div class="chips" id="ql-k1">
+        <button class="chip" data-v="tinh_huong" aria-pressed="false">Giao tình huống</button>
+        <button class="chip" data-v="tu_do" aria-pressed="false">Câu đã từng hỏi</button>
+      </div></div>
+    <div class="plain"><span class="lbl">Đợt 2 thu theo kiểu</span>
+      <div class="chips" id="ql-k2">
+        <button class="chip" data-v="tinh_huong" aria-pressed="false">Giao tình huống</button>
+        <button class="chip" data-v="tu_do" aria-pressed="false">Câu đã từng hỏi</button>
+      </div></div>
+    <p class="hint">Đổi kiểu thu khi đợt đang đóng. Mỗi câu được lưu kèm kiểu thu lúc gửi.</p>
     <label class="f" for="ql-mt1">Số prompt cần thu ở đợt 1<input type="text" inputmode="numeric" id="ql-mt1"></label>
     <label class="f" for="ql-mt2">Số prompt cần thu ở đợt 2<input type="text" inputmode="numeric" id="ql-mt2"></label>
     <label class="f" for="ql-truoc">Link Google Forms – khảo sát trước<input type="text" inputmode="url" id="ql-truoc" placeholder="Để trống = nút chưa mở"></label>

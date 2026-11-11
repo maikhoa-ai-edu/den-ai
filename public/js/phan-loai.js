@@ -33,6 +33,8 @@ function moThe(cau) {
   $('#pl-code').textContent = cau.ma;
   $('#pl-ctx').textContent = [TEN_BOI_CANH[cau.boi_canh], cau.mon].filter(Boolean).join(' · ');
   $('#pl-text').textContent = cau.noi_dung;
+  $('#pl-task').hidden = !cau.nhiem_vu;
+  $('#pl-task').textContent = 'Tình huống được giao: ' + cau.nhiem_vu;
   $('#pl-abs').checked = !!cu?.do_tuyet_doi;
   $('#pl-hard').checked = !!cu?.ca_kho;
   $('#pl-why').value = cu?.ly_do || '';

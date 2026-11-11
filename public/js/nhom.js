@@ -33,6 +33,7 @@ const O = { muc_tieu_dot_1: '#ql-mt1', muc_tieu_dot_2: '#ql-mt2', link_khao_sat_
 
 function dienQuanLy(ch) {
   $$('#ql-dot .chip').forEach(n => n.setAttribute('aria-pressed', n.dataset.v === ch.dot_dang_mo));
+  for (const d of [1, 2]) $$(`#ql-k${d} .chip`).forEach(n => n.setAttribute('aria-pressed', n.dataset.v === ch['kieu_dot_' + d]));
   for (const [khoa, o] of Object.entries(O)) $(o).value = ch[khoa] ?? '';
 }
 export async function veQuanLy() {
@@ -40,7 +41,7 @@ export async function veQuanLy() {
   if (kq.ok) dienQuanLy(kq.cau_hinh); else thongBao(kq.loi || 'Chưa tải được cấu hình.');
 }
 async function luuQuanLy() {
-  const gui = { dot_dang_mo: daChon('#ql-dot') ?? '0' };
+  const gui = { dot_dang_mo: daChon('#ql-dot') ?? '0', kieu_dot_1: daChon('#ql-k1'), kieu_dot_2: daChon('#ql-k2') };
   for (const [khoa, o] of Object.entries(O)) gui[khoa] = $(o).value.trim();
   $('#ql-save').disabled = true;
   const kq = await goiMayChu('/api/cau-hinh', gui);
@@ -55,6 +56,8 @@ export async function khoiDongNhom() {
   $$('#lg-acct button').forEach(n => (n.onclick = () => $$('#lg-acct button').forEach(x => x.setAttribute('aria-pressed', x === n))));
   $('#lg-form').onsubmit = dangNhap;
   nhomChon('#ql-dot');
+  nhomChon('#ql-k1');
+  nhomChon('#ql-k2');
   $('#ql-save').onclick = luuQuanLy;
   vai = (await goiMayChu('/api/phien')).vai || null;
 }

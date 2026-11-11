@@ -4,6 +4,7 @@
 import { $, $$, sach, thongBao, goiMayChu, nhom } from './app.js';
 
 const TEN_BOI_CANH = { tuhoc: 'Tự học', venha: 'Bài về nhà', duan: 'Dự án', kiemtra: 'Kiểm tra', khac: 'Việc khác' };
+const TEN_CONG_CU = { chatgpt: 'ChatGPT', gemini: 'Gemini', copilot: 'Copilot', khac: 'công cụ khác', khong_dung: 'không dùng AI' };
 const NHAN = { moi: '<span class="pill na">Chưa rà</span>', hop_le: '<span class="pill c-X">Hợp lệ</span>', loai: '<span class="pill c-D">Loại</span>' };
 
 async function doi(id, trangThai) {
@@ -23,10 +24,11 @@ export async function veLamSach(giuViTri) {
   $('#ls-lock').hidden = !kq.da_khoa;
   $('#ls-list').innerHTML = kq.ds.length ? kq.ds.map(p => `<div class="card">
     <div class="head"><span class="code">${p.ma}</span><span class="tag">${[`Khối ${p.khoi}`, TEN_BOI_CANH[p.boi_canh], sach(p.mon)].filter(Boolean).join(' · ')}</span></div>
+    ${p.nhiem_vu ? `<div class="hint">Tình huống được giao: ${sach(p.nhiem_vu)}${p.cong_cu_ai ? ' · Công cụ: ' + (TEN_CONG_CU[p.cong_cu_ai] || '') : ''}</div>` : ''}
     <div class="quote">${sach(p.noi_dung)}</div>
     ${p.can_ra ? '<div class="warn soft">Có thể chứa tên người thật. Đọc kĩ trước khi cho Hợp lệ.</div>' : ''}
     <div class="vs">${NHAN[p.trang_thai]}${p.ly_do_loai ? `<span class="hint">${sach(p.ly_do_loai)}</span>` : ''}</div>
-    ${kq.da_khoa ? '' : `<div class="rowbtn"><button class="btn sm" data-id="${p.id}" data-tt="hop_le">Hợp lệ</button>
+    ${kq.da_khoa || p.cong_cu_ai === 'khong_dung' ? '' : `<div class="rowbtn"><button class="btn sm" data-id="${p.id}" data-tt="hop_le">Hợp lệ</button>
       <input type="text" id="ls-ly-do-${p.id}" maxlength="200" placeholder="Lý do nếu loại" aria-label="Lý do loại ${p.ma}">
       <button class="btn ghost sm" data-id="${p.id}" data-tt="loai">Loại</button></div>`}
   </div>`).join('') : '<div class="card"><p class="hint">Đợt này chưa có câu nào.</p></div>';

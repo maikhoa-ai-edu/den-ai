@@ -16,6 +16,8 @@ const MUC = {
   muc_tieu_dot_2: soNguyen(1, 500),
   link_khao_sat_truoc: linkForm,
   link_khao_sat_sau: linkForm,
+  kieu_dot_1: v => (['tinh_huong', 'tu_do'].includes(v) ? v : null),
+  kieu_dot_2: v => (['tinh_huong', 'tu_do'].includes(v) ? v : null),
   phien_ban_tieu_chi: v => (/^v\d+\.\d+$/.test(String(v).trim()) ? String(v).trim() : null)
 };
 

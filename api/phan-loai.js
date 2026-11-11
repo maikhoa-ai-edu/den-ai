@@ -7,7 +7,7 @@
 // Máy chủ lọc theo tài khoản đang đăng nhập, không tin tên người chấm do trình duyệt gửi lên.
 
 import { mauXauNhat } from '../public/js/chung/luat-tam.js';
-import { docCauHinh, dsPrompt, layPrompt, dsPhanLoai, luuPhanLoai, dsKhoa, themKhoa } from './_lib/db.js';
+import { docCauHinh, dsPrompt, layPrompt, dsPhanLoai, luuPhanLoai, dsKhoa, themKhoa, dsTinhHuong } from './_lib/db.js';
 import { docThan, baoLoiMayChu, maPrompt } from './_lib/http.js';
 import { canVai } from './_lib/phien.js';
 
@@ -40,12 +40,14 @@ export default async function handler(req, res) {
           }))
         });
       }
+      const nhiemVu = new Map((await dsTinhHuong()).map(t => [t.id, t.nhiem_vu]));
       const cuaToi = new Map((await dsPhanLoai(dot, vai)).map(d => [d.prompt_id, d]));
       return res.status(200).json({
         ok: true, dot, tong: hopLe.length, da_khoa: daKhoa(vai),
         phien_ban_tieu_chi: (await docCauHinh()).phien_ban_tieu_chi,
         ds: hopLe.map(p => ({
           id: p.id, ma: maPrompt(p.id), noi_dung: p.noi_dung, boi_canh: p.boi_canh, mon: p.mon,
+          nhiem_vu: nhiemVu.get(p.tinh_huong_id) || '', cong_cu_ai: p.cong_cu_ai || '',
           cham: cuaToi.get(p.id) || null
         }))
       });
