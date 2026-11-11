@@ -72,13 +72,21 @@ Nếu đăng nhập báo "Máy chủ đang gặp lỗi": thiếu một trong 4 b
 
 **Trước khi chấm thật:** dấu khóa không gỡ được trong app. Khi chạy thử, đừng bấm khóa; nếu lỡ bấm, thầy xóa dòng tương ứng trong bảng `khoa_cham` trên Supabase.
 
+## Nâng lên bản 0.3 (Đối khớp)
+
+Chỉ một bước: **Supabase > SQL Editor**, dán toàn bộ `supabase/003_doi_khop.sql`, bấm Run. Không có biến môi trường mới.
+
+Kiểm tra: đăng nhập bất kỳ tài khoản nào > thẻ Đối khớp. Khi chưa đủ hai em khóa, trang hiện "Chưa mở" và cho biết em nào đã khóa.
+
 ## Quy trình chấm một đợt
 
 1. GV mở đợt ở trang Quản lý; HS góp câu hỏi.
 2. Đủ số thì GV đóng đợt.
 3. HS1 rà hết ở trang Làm sạch (không còn câu "Chưa rà").
 4. HS1 và HS2 chấm ở trang Phân loại, mỗi em một máy, không trao đổi.
-5. Mỗi em chấm hết thì bấm khóa. Trang Đối khớp (bản 0.3) mở khi cả hai đã khóa.
+5. Mỗi em chấm hết thì bấm khóa.
+6. Cả hai đã khóa: hai em ngồi cùng nhau ở trang Đối khớp, bàn từng ca lệch, ghi nguyên nhân, đề xuất sửa tiêu chí và màu thống nhất.
+7. Các đề xuất sửa tiêu chí là căn cứ để HS2 viết bản tiêu chí tiếp theo; GV đổi phiên bản tiêu chí ở trang Quản lý trước đợt chấm sau.
 
 ## Bảng `cau_hinh` (từ bản 0.2 thầy sửa ở trang Quản lý, không cần vào Supabase)
 

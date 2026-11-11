@@ -82,3 +82,11 @@ export async function dsKhoa(dot) {
 export async function themKhoa(dot, nguoiCham) {
   lay(await sb().from('khoa_cham').upsert({ dot, nguoi_cham: nguoiCham }, { onConflict: 'dot,nguoi_cham' }));
 }
+
+// ---------- đối khớp ----------
+export async function dsDoiKhop(dot) {
+  return lay(await sb().from('doi_khop').select('*').eq('dot', dot)).data;
+}
+export async function luuDoiKhop(dong) {
+  lay(await sb().from('doi_khop').upsert({ ...dong, cap_nhat_luc: new Date().toISOString() }, { onConflict: 'prompt_id' }));
+}

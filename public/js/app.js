@@ -6,6 +6,7 @@ import { khoiDongKhaoSat } from './khao-sat.js';
 import { khoiDongNhom, layVai, dangXuat, veQuanLy } from './nhom.js';
 import { khoiDongPhanLoai, vePhanLoai } from './phan-loai.js';
 import { khoiDongLamSach, veLamSach } from './lam-sach.js';
+import { veDoiKhop } from './doi-khop.js';
 
 export const $ = s => document.querySelector(s);
 export const $$ = s => [...document.querySelectorAll(s)];
@@ -57,6 +58,7 @@ const THE_CHUNG = [['kiem-tra', 'Kiểm tra'], ['gop-prompt', 'Góp prompt'], ['
 const THE_NHOM = [
   ['phan-loai', 'Phân loại', ['GV', 'HS1', 'HS2'], vePhanLoai],
   ['lam-sach', 'Làm sạch', ['GV', 'HS1'], veLamSach],
+  ['doi-khop', 'Đối khớp', ['GV', 'HS1', 'HS2'], veDoiKhop],
   ['quan-ly', 'Quản lý', ['GV'], veQuanLy]
 ];
 
@@ -78,6 +80,7 @@ export function chuyenTrang() {
   $('#who').innerHTML = vai ? `${vai} · <button id="out">Thoát</button>` : 'Ẩn danh';
   if (vai) $('#out').onclick = dangXuat;
   $$('[data-dot] button').forEach(n => n.setAttribute('aria-pressed', Number(n.dataset.v) === nhom.dot));
+  $('nav.tabs div').style.maxWidth = the.length > 4 ? '720px' : '';
   if (trangNhom) trangNhom[3]();
   if (t === 'gop-prompt' && daVe) veGopPrompt(true);
   daVe = true;

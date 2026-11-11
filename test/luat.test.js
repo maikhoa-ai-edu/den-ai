@@ -5,6 +5,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { timThongTinCaNhan, chuanHoa } from '../public/js/chung/chan-thong-tin.js';
 import { chamTam } from '../public/js/chung/luat-tam.js';
+import { doiChieu } from '../public/js/chung/thong-ke.js';
 
 test('chặn số điện thoại, email, tên bạn học, địa chỉ', () => {
   for (const cau of [
@@ -46,4 +47,20 @@ test('luật tạm: các ca rõ ràng', () => {
   const kt = chamTam('Giải đề kiểm tra 15 phút này giúp mình', 'kiemtra');
   assert.ok(kt.tuyetDoi && kt.mauCuoi === 'D' && kt.xanhHoa === '');
   assert.ok(chamTam('ghép mặt bạn ấy vào ảnh hài', 'khac').tuyetDoi);
+});
+
+test("Cohen's kappa: ví dụ tính tay", () => {
+  // 50 câu: 20 cùng Xanh, 15 cùng Vàng, 5 câu HS1 Xanh mà HS2 Vàng, 10 câu ngược lại.
+  // po = 35/50 = 0,7; pe = 0,5*0,6 + 0,5*0,4 = 0,5; kappa = (0,7 - 0,5) / (1 - 0,5) = 0,4
+  const cap = [...Array(20).fill(['X', 'X']), ...Array(15).fill(['V', 'V']), ...Array(5).fill(['X', 'V']), ...Array(10).fill(['V', 'X'])];
+  const kq = doiChieu(cap);
+  assert.equal(kq.cung, 35);
+  assert.ok(Math.abs(kq.po - 0.7) < 1e-9 && Math.abs(kq.kappa - 0.4) < 1e-9);
+  assert.deepEqual(kq.maTran, [[20, 5, 0], [10, 15, 0], [0, 0, 0]]);
+});
+
+test("Cohen's kappa: các trường hợp biên", () => {
+  assert.equal(doiChieu([]).kappa, null);                                  // chưa có câu nào
+  assert.equal(doiChieu([['X', 'X'], ['X', 'X']]).kappa, null);            // cả hai chỉ dùng một màu
+  assert.equal(doiChieu([['X', 'X'], ['V', 'V'], ['D', 'D']]).kappa, 1);   // khớp hoàn toàn
 });

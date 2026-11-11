@@ -168,6 +168,27 @@
   <div class="card" id="pl-done" hidden><div class="head"><h2>Các câu em đã chấm</h2><span class="tag" id="pl-ver"></span></div><div id="pl-list" class="plain"></div></div>
 </section>
 
+<!-- ============ ĐỐI KHỚP ============ -->
+<section class="view wrap wide" data-view="doi-khop" hidden>
+  <h1>Đối khớp hai bộ mã</h1>
+  <p class="lead">Trang này chỉ mở khi cả hai em đã khóa kết quả chấm. Hai em ngồi cùng nhau, bàn từng ca lệch và tự quyết định màu thống nhất. Kết quả chấm độc lập ban đầu được giữ nguyên.</p>
+  <div class="seg" role="group" aria-label="Đợt" data-dot><button data-v="1">Đợt 1 · thử</button><button data-v="2">Đợt 2 · chính thức</button></div>
+  <div class="card" id="dk-wait" hidden><h2>Chưa mở</h2><p class="hint">Cần cả hai bạn chấm hết và bấm khóa ở trang Phân loại.</p><p id="dk-wait-text"></p></div>
+  <div id="dk-body" class="plain" hidden>
+    <div class="tiles" id="dk-tiles"></div>
+    <div class="grid2">
+      <div class="card"><h2>Ma trận HS1 × HS2 (màu cuối)</h2>
+        <div class="scroll"><table id="dk-matrix"></table></div>
+        <p class="hint">Hàng là màu HS1 chấm, cột là màu HS2 chấm. Ô tô đậm trên đường chéo là số câu hai em chấm cùng màu.</p></div>
+      <div class="card"><h2>Số câu chấm giống nhau theo từng tiêu chí</h2>
+        <div class="bars" id="dk-tc"></div>
+        <p class="hint">Tiêu chí có thanh ngắn nhất là tiêu chí hai em hiểu khác nhau nhiều nhất.</p>
+        <p class="hint" id="dk-kho"></p></div>
+    </div>
+    <div class="card"><h2>Các ca lệch màu</h2><p class="hint">Trong bảng của mỗi ca, ô tô đậm là tiêu chí hai em chấm khác nhau.</p><div id="dk-cases" class="plain"></div></div>
+  </div>
+</section>
+
 <!-- ============ LÀM SẠCH ============ -->
 <section class="view wrap" data-view="lam-sach" hidden>
   <h1>Làm sạch dữ liệu</h1>

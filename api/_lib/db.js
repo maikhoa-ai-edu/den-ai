@@ -11,5 +11,6 @@ export const {
   docCauHinh, ghiCauHinh,
   demPromptGop, demGanDay, vuaCoTrung, themPrompt,
   dsPrompt, layPrompt, capNhatPrompt,
-  dsPhanLoai, luuPhanLoai, dsKhoa, themKhoa
+  dsPhanLoai, luuPhanLoai, dsKhoa, themKhoa,
+  dsDoiKhop, luuDoiKhop
 } = db;

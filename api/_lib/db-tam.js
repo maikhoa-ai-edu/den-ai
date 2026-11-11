@@ -35,3 +35,10 @@ export async function dsKhoa(dot) { return khoa.filter(k => k.dot === dot).map(k
 export async function themKhoa(dot, nguoiCham) {
   if (!khoa.some(k => k.dot === dot && k.nguoi_cham === nguoiCham)) khoa.push({ dot, nguoi_cham: nguoiCham, khoa_luc: new Date().toISOString() });
 }
+
+const doiKhop = [];
+export async function dsDoiKhop(dot) { return doiKhop.filter(d => d.dot === dot).map(d => ({ ...d })); }
+export async function luuDoiKhop(dong) {
+  const cu = doiKhop.find(d => d.prompt_id === dong.prompt_id);
+  if (cu) Object.assign(cu, dong); else doiKhop.push({ ...dong });
+}
