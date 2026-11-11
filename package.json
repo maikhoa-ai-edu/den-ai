@@ -1,0 +1,15 @@
+{
+  "name": "den-ai",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Webapp Đèn AI – dự án KHKT \"Hỏi để hiểu hay hỏi để chép?\", Trường THCS&THPT Vĩnh Phong",
+  "type": "module",
+  "engines": { "node": "22.x" },
+  "scripts": {
+    "thu": "node scripts/chay-thu.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0"
+  }
+}

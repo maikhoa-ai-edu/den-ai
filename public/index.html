@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="referrer" content="no-referrer">
+<title>Đèn AI – Hỏi để hiểu hay hỏi để chép?</title>
+<meta name="description" content="Công cụ của nhóm học sinh nghiên cứu KHKT Trường THCS&THPT Vĩnh Phong: xem câu hỏi gửi AI nên bật đèn xanh, vàng hay đỏ.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand"><span class="lamp all" aria-hidden="true"><i></i><i></i><i></i></span><span>Đèn AI<small>Hỏi để hiểu hay hỏi để chép?</small></span></div>
+  <span class="who">Ẩn danh</span>
+</div></header>
+
+<main>
+<!-- ============ KIỂM TRA ============ -->
+<section class="view wrap" data-view="kiem-tra">
+  <h1>Câu hỏi này nên bật đèn gì?</h1>
+  <p class="lead">Dán câu em định hỏi AI. Công cụ xét theo bộ tiêu chí Đèn tín hiệu và gợi ý cách hỏi tốt hơn. Kết quả chỉ để tham khảo; thầy cô là người quyết định cuối cùng.</p>
+  <div class="seg" role="group" aria-label="Chế độ">
+    <button id="mode-hs" aria-pressed="true">Học sinh</button><button id="mode-gv" aria-pressed="false">Giáo viên</button>
+  </div>
+
+  <div class="card" id="hs-form">
+    <label class="f" for="ck-prompt">Câu em định hỏi AI
+      <textarea id="ck-prompt" maxlength="1000" placeholder="Ví dụ: Giải thích cung cầu bằng ví dụ bán xoài"></textarea></label>
+    <div class="plain"><span class="lbl">Em đang làm gì?</span>
+      <div class="chips" id="ck-ctx">
+        <button class="chip" data-v="tuhoc" aria-pressed="false">Tự học</button>
+        <button class="chip" data-v="venha" aria-pressed="false">Bài về nhà</button>
+        <button class="chip" data-v="duan" aria-pressed="false">Dự án</button>
+        <button class="chip" data-v="kiemtra" aria-pressed="false">Đang kiểm tra</button>
+      </div></div>
+    <label class="f" for="ck-mon">Môn
+      <select id="ck-mon"><option>Ngữ văn</option><option>Toán</option><option>Tiếng Anh</option><option>GD KT&amp;PL</option><option>Lịch sử</option><option>Địa lí</option><option>Vật lí</option><option>Hóa học</option><option>Sinh học</option><option>Tin học</option><option>Môn khác</option></select></label>
+    <button class="btn" id="ck-go">Bật đèn</button>
+  </div>
+
+  <div class="card" id="ck-result" hidden>
+    <div class="verdict"><span class="lamp big" id="ck-lamp" aria-hidden="true"><i></i><i></i><i></i></span>
+      <div><span class="tag">Kết quả tham khảo</span><h2 id="ck-title"></h2><p class="hint" id="ck-why"></p></div></div>
+    <div class="tc" id="ck-tc"></div>
+    <div class="plain" id="ck-green-box"><span class="tag">Thử hỏi thế này</span><div class="quote" id="ck-green"></div></div>
+    <p class="hint">Sau khi dùng AI, nhớ ghi thẻ khai báo 5 mục: công cụ, mục đích, phạm vi AI hỗ trợ, phần em tự làm, cách em kiểm chứng. Khai báo không làm em bị trừ điểm.</p>
+    <p class="hint">Bản thử: công cụ đang chấm bằng luật dò từ khóa nên có thể sai. Em thấy sai thì báo nhóm nghiên cứu nhé.</p>
+    <div class="plain" id="ck-donate-box">
+      <label class="check"><input type="checkbox" id="ck-donate"><span>Em đồng ý góp câu hỏi này cho nhóm nghiên cứu (ẩn danh, không lưu tên hay thiết bị). Không tích thì câu hỏi không được lưu ở đâu cả.</span></label>
+      <div class="plain" id="ck-donate-more" hidden>
+        <span class="lbl">Em học khối</span>
+        <div class="chips" id="ck-khoi">
+          <button class="chip" data-v="10" aria-pressed="false">Khối 10</button>
+          <button class="chip" data-v="11" aria-pressed="false">Khối 11</button>
+          <button class="chip" data-v="12" aria-pressed="false">Khối 12</button>
+        </div>
+        <button class="btn ghost" id="ck-donate-send">Góp câu này</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="gv-form" hidden>
+    <span class="tag">Chế độ giáo viên</span>
+    <h2>Mở sau ngày 17/11</h2>
+    <p>Thầy cô nhập yêu cầu của bài và thẻ khai báo của học sinh; công cụ trả về màu đèn cho cách dùng đã khai báo và 3–5 câu hỏi vấn đáp nhanh.</p>
+    <p class="hint">Chế độ này cần AI đọc nội dung nên chờ nhóm chốt bộ tiêu chí v1.0. Công cụ không đưa ra "% do AI viết" và không gợi ý trừ điểm vì học sinh đã khai báo (mục VI.4, QĐ 2422/QĐ-BGDĐT).</p>
+  </div>
+</section>
+
+<!-- ============ GÓP PROMPT ============ -->
+<section class="view wrap" data-view="gop-prompt" hidden>
+  <h1>Góp một câu em từng hỏi AI</h1>
+  <p class="lead">Không cần đăng nhập, không ghi tên. Nhóm nghiên cứu chỉ dùng câu hỏi để thử bộ tiêu chí Đèn tín hiệu. Mỗi bạn góp một câu.</p>
+  <div class="card" id="gp-progress" hidden>
+    <div class="meter"><span id="gp-round"></span><span><b id="gp-n">0</b> / <span id="gp-goal">0</span></span></div>
+    <div class="prog"><b id="gp-bar" style="width:0"></b></div>
+  </div>
+  <div class="card" id="gp-closed" hidden><h2>Chưa mở đợt góp câu hỏi</h2><p class="hint">Nhóm nghiên cứu sẽ mở khi phát phiếu cho lớp em. Em quay lại sau nhé.</p></div>
+  <div class="card" id="gp-done" hidden><h2>Cảm ơn em đã góp câu hỏi</h2><p class="hint">Câu hỏi đã được ghi nhận ẩn danh. Mỗi bạn chỉ góp một câu trong mỗi đợt. Em có thể thử công cụ ở thẻ Kiểm tra.</p></div>
+  <div class="card" id="gp-form" hidden>
+    <label class="f" for="gp-prompt">Một câu em từng hỏi AI (chép gần đúng)
+      <textarea id="gp-prompt" maxlength="1000" placeholder="Ví dụ: Giải thích cung cầu bằng ví dụ bán xoài"></textarea></label>
+    <div class="warn" id="gp-warn" hidden></div>
+    <div class="plain" id="gp-soft" hidden>
+      <div class="warn" id="gp-soft-text"></div>
+      <button class="btn ghost" id="gp-soft-ok">Không có tên người thật, vẫn gửi</button>
+    </div>
+    <div class="plain"><span class="lbl">Em học khối</span>
+      <div class="chips" id="gp-khoi">
+        <button class="chip" data-v="10" aria-pressed="false">Khối 10</button>
+        <button class="chip" data-v="11" aria-pressed="false">Khối 11</button>
+        <button class="chip" data-v="12" aria-pressed="false">Khối 12</button>
+      </div></div>
+    <div class="plain"><span class="lbl">Lúc đó em đang</span>
+      <div class="chips" id="gp-ctx">
+        <button class="chip" data-v="tuhoc" aria-pressed="false">Tự học</button>
+        <button class="chip" data-v="venha" aria-pressed="false">Làm bài về nhà</button>
+        <button class="chip" data-v="duan" aria-pressed="false">Làm dự án</button>
+        <button class="chip" data-v="kiemtra" aria-pressed="false">Kiểm tra</button>
+        <button class="chip" data-v="khac" aria-pressed="false">Việc khác</button>
+      </div></div>
+    <label class="f" for="gp-mon">Môn<input type="text" id="gp-mon" maxlength="40" placeholder="Ví dụ: Toán"></label>
+    <p class="hint">Không ghi tên em. Không ghi tên bạn bè, thầy cô, địa chỉ, số điện thoại trong câu hỏi. Tham gia là tự nguyện, không ảnh hưởng điểm số.</p>
+    <button class="btn" id="gp-send">Gửi ẩn danh</button>
+  </div>
+</section>
+
+<!-- ============ KHẢO SÁT ============ -->
+<section class="view wrap" data-view="khao-sat" hidden>
+  <h1>Khảo sát việc dùng AI trong học tập</h1>
+  <p class="lead">Phiếu làm trên Google Forms, mở ở thẻ mới. Không hỏi tên, không tính điểm. Em chỉ làm khi phụ huynh đã ký phiếu đồng ý và em tự nguyện tham gia.</p>
+  <div class="card">
+    <span class="tag">Phiếu 1</span>
+    <h2>Khảo sát trước</h2>
+    <p class="hint">38 câu, khoảng 12 phút.</p>
+    <a class="btn" id="ks-truoc" target="_blank" rel="noopener noreferrer" aria-disabled="true">Chưa mở</a>
+  </div>
+  <div class="card">
+    <span class="tag">Phiếu 2</span>
+    <h2>Khảo sát sau</h2>
+    <p class="hint">Dành cho lớp đã học 2 tiết với bộ công cụ Đèn tín hiệu. Thầy cô sẽ báo khi mở.</p>
+    <a class="btn" id="ks-sau" target="_blank" rel="noopener noreferrer" aria-disabled="true">Chưa mở</a>
+  </div>
+</section>
+
+<!-- ============ NHÓM ============ -->
+<section class="view wrap" data-view="nhom" hidden>
+  <h1>Khu vực nhóm nghiên cứu</h1>
+  <p class="lead">Chỉ 3 tài khoản được vào: giáo viên hướng dẫn và hai học sinh thực hiện đề tài.</p>
+  <div class="card"><h2>Đang xây dựng</h2><p class="hint">Đăng nhập, Phân loại độc lập và Đối khớp sẽ có ở bản 0.2.</p></div>
+</section>
+</main>
+
+<nav class="tabs" aria-label="Điều hướng"><div id="tabs"></div></nav>
+<div id="toast" role="status" hidden></div>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
