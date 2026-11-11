@@ -22,7 +22,6 @@ body{margin:0}
 
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.55;padding-bottom:calc(72px + env(safe-area-inset-bottom,0px))}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
 h1,h2,h3,p{margin:0}
 h1{font-size:22px;line-height:1.25;font-weight:700;text-wrap:balance}
 h2{font-size:16px;font-weight:600;text-wrap:balance}
@@ -31,11 +30,6 @@ button,input,select,textarea{font:inherit;color:inherit}
 .wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));margin:0 auto;max-width:592px}
 .wrap.wide{max-width:980px}
 
-header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--surface);border-bottom:1px solid var(--line)}
-header.top .wrap{display:flex;align-items:center;gap:10px;padding-block:10px;max-width:980px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;min-width:0}
-.brand small{display:block;font-weight:400;font-size:12px;color:var(--muted)}
-.who{margin-left:auto;font-size:13px;border:1px solid var(--line);border-radius:999px;padding:5px 12px;background:var(--bg);white-space:nowrap}
 .note{background:color-mix(in srgb,var(--wait) 16%,var(--surface));border-bottom:1px solid var(--line);font-size:12.5px}
 .note .wrap{padding-block:6px;max-width:980px}
 
@@ -134,10 +128,6 @@ td.diag{font-weight:700;background:color-mix(in srgb,var(--accent) 12%,var(--sur
 .ai{border:1px dashed var(--accent);border-radius:10px;padding:10px 12px;font-size:13.5px;display:flex;flex-direction:column;gap:4px}
 .ai ul{margin:0;padding-left:18px}
 
-nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:9;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px))}
-nav.tabs div{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;max-width:592px;margin:0 auto}
-nav.tabs a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:60px;font-size:12.5px;color:var(--muted);text-decoration:none;border-top:3px solid transparent;text-align:center;padding:4px 2px}
-nav.tabs a[aria-current="page"]{color:var(--accent);font-weight:600;border-top-color:var(--accent)}
 #toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:14px;z-index:20;max-width:calc(100% - 32px)}
 @media (prefers-reduced-motion:no-preference){.prog b,.bars .t b{transition:width .3s}}
 
@@ -147,7 +137,99 @@ a.btn{display:block;text-align:center;text-decoration:none}
 a.btn[aria-disabled="true"]{opacity:.45;pointer-events:none}
 .warn.soft{border-left-color:var(--wait);background:color-mix(in srgb,var(--wait) 12%,var(--surface))}
 .btn.sm{padding:8px 14px;min-height:40px;font-size:14px}
-.who button{border:0;background:none;padding:0;text-decoration:underline;cursor:pointer}
 .rowbtn{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .rowbtn input{flex:1;min-width:160px}
-a.brand{color:inherit;text-decoration:none}
+
+/* ================= Khung trang: đầu trang, điều hướng, chân trang ================= */
+/* Đầu trang mang màu "vỏ đèn"; vạch ba màu bên dưới là dấu hiệu nhận diện của dự án. */
+body{min-height:100vh;display:flex;flex-direction:column}
+main{flex:1}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--housing)}
+.wrap.wide{max-width:1120px}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--housing);color:#F3F6FB;
+  border-bottom:3px solid;border-image:linear-gradient(90deg,var(--stop) 0 33.33%,var(--wait) 33.33% 66.66%,var(--go) 66.66%) 1}
+header.top .wrap{display:flex;align-items:center;gap:12px;padding-block:10px;max-width:1120px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;min-width:0;color:inherit;text-decoration:none;letter-spacing:-.01em}
+.brand small{display:block;font-weight:400;font-size:12px;color:#A9B4C6;letter-spacing:0}
+header.top .lamp{background:#0A0F17;box-shadow:0 0 0 1px rgba(255,255,255,.14)}
+.who{margin-left:auto;font-size:13px;border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:5px 12px;white-space:nowrap;color:#E4E9F2}
+.who button{border:0;background:none;padding:0;color:inherit;font:inherit;text-decoration:underline;cursor:pointer}
+
+/* Điện thoại: thanh điều hướng nằm cố định dưới đáy màn hình. */
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:9;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px))}
+nav.tabs div{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;max-width:720px;margin:0 auto}
+nav.tabs a{display:flex;align-items:center;justify-content:center;min-height:60px;font-size:12.5px;color:var(--muted);text-decoration:none;border-top:3px solid transparent;text-align:center;padding:4px 2px}
+nav.tabs a[aria-current="page"]{color:var(--accent);font-weight:600;border-top-color:var(--accent)}
+
+.foot{border-top:1px solid var(--line);background:var(--surface);font-size:13px;color:var(--muted);margin-top:28px}
+.foot .wrap{display:grid;gap:16px;padding-block:20px;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+.foot strong{color:var(--ink);font-size:13.5px}
+.foot p{margin-top:4px;max-width:44ch}
+
+/* ================= Nút ================= */
+.btn{box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 1px 2px rgba(20,28,42,.25);transition:filter .12s,transform .06s}
+.btn:hover:not([disabled]){filter:brightness(1.08)}
+.btn:active:not([disabled]){transform:translateY(1px)}
+.btn.ghost{box-shadow:none;background:var(--surface)}
+.btn.ghost:hover:not([disabled]){filter:none;border-color:var(--accent)}
+/* Nút "Bật đèn": màu vỏ đèn, có ba bóng đèn nhỏ. */
+.btn.signal{background:var(--housing);color:#fff;display:flex;align-items:center;justify-content:center;gap:12px;font-size:16px;min-height:54px}
+.btn.signal .lamp{background:#0A0F17;padding:5px 6px;gap:5px;box-shadow:0 0 0 1px rgba(255,255,255,.16)}
+.btn.signal .lamp i{width:11px;height:11px}
+.chip:hover{border-color:var(--accent)}
+.seg button:hover{background:color-mix(in srgb,var(--surface) 60%,transparent)}
+
+/* ================= Bảng "Ba màu đèn" ================= */
+.signal-panel{background:var(--housing);color:#E9EEF6;border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:14px}
+.signal-panel h2{font-size:15px;color:#A9B4C6;font-weight:500}
+.signal-panel p{font-size:13px;color:#A9B4C6;border-top:1px solid rgba(255,255,255,.12);padding-top:12px}
+.sig{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center}
+.sig i{width:44px;height:44px;border-radius:50%;box-shadow:0 0 0 5px #0A0F17,0 0 22px -2px currentColor}
+.sig i.bg-X{color:var(--go)}.sig i.bg-V{color:var(--wait)}.sig i.bg-D{color:var(--stop)}
+.sig strong{display:block;font-size:15px;color:#fff}
+.sig span{font-size:13.5px;color:#C3CCDA}
+
+/* ================= Bố cục ================= */
+.split,.col{display:flex;flex-direction:column;gap:14px;min-width:0}
+.cards{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));align-items:start}
+.ticks{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;font-size:14px}
+.ticks li{padding-left:22px;position:relative}
+.ticks li::before{content:"";position:absolute;left:0;top:.5em;width:10px;height:10px;border-radius:50%;background:var(--go)}
+section.view.wide>.seg{max-width:560px}
+
+/* ================= Máy tính (từ 900px) ================= */
+@media (min-width:900px){
+  body{font-size:15.5px;padding-bottom:0}
+  h1{font-size:30px;letter-spacing:-.02em}
+  h2{font-size:17px}
+  .lead{font-size:15px}
+  main{padding-block:32px}
+  section.view{gap:18px}
+  header.top .wrap{padding-block:12px;gap:28px}
+  .brand{font-size:19px}
+  .brand .lamp{padding:5px;gap:4px}
+  .brand .lamp i{width:11px;height:11px}
+  /* Thanh điều hướng lên đầu trang. */
+  nav.tabs{position:static;background:none;border:0;padding:0;flex:1}
+  nav.tabs div{display:flex;gap:4px;max-width:none;margin:0}
+  nav.tabs a{min-height:40px;padding:0 14px;font-size:14.5px;color:#C3CCDA;border-top:0;border-radius:8px}
+  nav.tabs a:hover{color:#fff;background:rgba(255,255,255,.08)}
+  nav.tabs a[aria-current="page"]{color:#fff;background:rgba(255,255,255,.14);font-weight:600}
+  .who{margin-left:0}
+  #toast{bottom:28px}
+
+  .card{padding:22px;box-shadow:0 1px 2px rgba(20,28,42,.05),0 12px 28px -18px rgba(20,28,42,.28)}
+  .tile{box-shadow:0 1px 2px rgba(20,28,42,.05)}
+  .tile .v{font-size:30px}
+  .split{flex-direction:row;align-items:flex-start;gap:28px}
+  .split>.col{flex:1 1 0;max-width:660px}
+  .split>.col.side{flex:0 1 380px}
+  /* Cột không có gì để hiện thì nhường chỗ cho cột còn lại. */
+  .split>.col:not(:has(>:not([hidden]))){display:none}
+  [data-view="kiem-tra"] .split>.col:last-child{position:sticky;top:92px}
+  .signal-panel{padding:26px;gap:18px}
+  .sig i{width:56px;height:56px}
+  .form2{display:grid;grid-template-columns:1fr 1fr;gap:16px 24px;align-items:start}
+  .form2>.plain:first-child,.form2>.hint,.form2>.btn{grid-column:1/-1}
+  .form2>.btn{justify-self:start;min-width:160px}
+}

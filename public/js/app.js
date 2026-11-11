@@ -82,7 +82,6 @@ export function chuyenTrang() {
   $('#who').innerHTML = vai ? `${vai} · <button id="out">Thoát</button>` : 'Ẩn danh';
   if (vai) $('#out').onclick = dangXuat;
   $$('[data-dot] button').forEach(n => n.setAttribute('aria-pressed', Number(n.dataset.v) === nhom.dot));
-  $('nav.tabs div').style.maxWidth = the.length > 4 ? '720px' : '';
   if (trangNhom) trangNhom[3]();
   if (t === 'gop-prompt' && daVe) veGopPrompt(true);
   daVe = true;

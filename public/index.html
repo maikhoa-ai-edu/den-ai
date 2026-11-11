@@ -13,12 +13,15 @@
 <body>
 <header class="top"><div class="wrap">
   <a class="brand" href="#kiem-tra"><span class="lamp all" aria-hidden="true"><i></i><i></i><i></i></span><span>Đèn AI<small>Hỏi để hiểu hay hỏi để chép?</small></span></a>
+  <nav class="tabs" aria-label="Điều hướng"><div id="tabs"></div></nav>
   <span class="who" id="who">Ẩn danh</span>
 </div></header>
 
 <main>
 <!-- ============ KIỂM TRA ============ -->
-<section class="view wrap" data-view="kiem-tra">
+<section class="view wrap wide" data-view="kiem-tra">
+ <div class="split">
+  <div class="col">
   <h1>Câu hỏi này nên bật đèn gì?</h1>
   <p class="lead">Dán câu em định hỏi AI. Công cụ xét theo bộ tiêu chí Đèn tín hiệu và gợi ý cách hỏi tốt hơn. Kết quả chỉ để tham khảo; thầy cô là người quyết định cuối cùng.</p>
   <div class="seg" role="group" aria-label="Chế độ">
@@ -37,9 +40,17 @@
       </div></div>
     <label class="f" for="ck-mon">Môn
       <select id="ck-mon"><option>Ngữ văn</option><option>Toán</option><option>Tiếng Anh</option><option>GD KT&amp;PL</option><option>Lịch sử</option><option>Địa lí</option><option>Vật lí</option><option>Hóa học</option><option>Sinh học</option><option>Tin học</option><option>Môn khác</option></select></label>
-    <button class="btn" id="ck-go">Bật đèn</button>
+    <button class="btn signal" id="ck-go"><span class="lamp row all" aria-hidden="true"><i></i><i></i><i></i></span>Bật đèn</button>
   </div>
 
+  <div class="card" id="gv-form" hidden>
+    <span class="tag">Chế độ giáo viên</span>
+    <h2>Mở sau ngày 17/11</h2>
+    <p>Thầy cô nhập yêu cầu của bài và thẻ khai báo của học sinh; công cụ trả về màu đèn cho cách dùng đã khai báo và 3–5 câu hỏi vấn đáp nhanh.</p>
+    <p class="hint">Chế độ này cần AI đọc nội dung nên chờ nhóm chốt bộ tiêu chí v1.0. Công cụ không đưa ra "% do AI viết" và không gợi ý trừ điểm vì học sinh đã khai báo (mục VI.4, QĐ 2422/QĐ-BGDĐT).</p>
+  </div>
+  </div>
+  <div class="col">
   <div class="card" id="ck-result" hidden>
     <div class="verdict"><span class="lamp big" id="ck-lamp" aria-hidden="true"><i></i><i></i><i></i></span>
       <div><span class="tag">Kết quả tham khảo</span><h2 id="ck-title"></h2><p class="hint" id="ck-why"></p></div></div>
@@ -60,17 +71,21 @@
       </div>
     </div>
   </div>
-
-  <div class="card" id="gv-form" hidden>
-    <span class="tag">Chế độ giáo viên</span>
-    <h2>Mở sau ngày 17/11</h2>
-    <p>Thầy cô nhập yêu cầu của bài và thẻ khai báo của học sinh; công cụ trả về màu đèn cho cách dùng đã khai báo và 3–5 câu hỏi vấn đáp nhanh.</p>
-    <p class="hint">Chế độ này cần AI đọc nội dung nên chờ nhóm chốt bộ tiêu chí v1.0. Công cụ không đưa ra "% do AI viết" và không gợi ý trừ điểm vì học sinh đã khai báo (mục VI.4, QĐ 2422/QĐ-BGDĐT).</p>
+  <div class="signal-panel" aria-label="Ý nghĩa ba màu đèn">
+    <h2>Ba màu đèn</h2>
+    <div class="sig"><i class="bg-D"></i><div><strong>Đỏ · không dùng</strong><span>AI làm trọn bài, dùng khi đang kiểm tra, đưa thông tin của người khác, gây hại.</span></div></div>
+    <div class="sig"><i class="bg-V"></i><div><strong>Vàng · dùng có điều kiện</strong><span>AI làm một phần. Em tự viết lại, kiểm chứng và khai báo.</span></div></div>
+    <div class="sig"><i class="bg-X"></i><div><strong>Xanh · nên dùng</strong><span>AI giải thích, gợi ý, đặt câu hỏi, kiểm tra bài em đã tự làm.</span></div></div>
+    <p>Mỗi câu hỏi được xét theo từng tiêu chí. Màu cuối là màu xấu nhất.</p>
   </div>
+  </div>
+ </div>
 </section>
 
 <!-- ============ GÓP PROMPT ============ -->
-<section class="view wrap" data-view="gop-prompt" hidden>
+<section class="view wrap wide" data-view="gop-prompt" hidden>
+ <div class="split">
+  <div class="col">
   <h1 id="gp-h1">Góp một câu em từng hỏi AI</h1>
   <p class="lead">Không cần đăng nhập, không ghi tên. Nhóm nghiên cứu chỉ dùng câu lệnh để thử bộ tiêu chí Đèn tín hiệu. Mỗi bạn góp một câu.</p>
   <div class="card" id="gp-progress" hidden>
@@ -125,12 +140,26 @@
     <p class="hint">Không ghi tên em. Không ghi tên bạn bè, thầy cô, địa chỉ, số điện thoại trong câu lệnh. Tham gia là tự nguyện, không ảnh hưởng điểm số.</p>
     <button class="btn" id="gp-send">Gửi ẩn danh</button>
   </div>
+  </div>
+  <div class="col side">
+  <div class="card">
+    <h2>Nhóm nghiên cứu cam kết</h2>
+    <ul class="ticks">
+      <li>Không hỏi tên, không cần đăng nhập, không lưu thiết bị của em.</li>
+      <li>Tham gia là tự nguyện và không ảnh hưởng điểm số.</li>
+      <li>Câu lệnh chỉ dùng để thử bộ tiêu chí Đèn tín hiệu; chỉ nhóm và giáo viên hướng dẫn xem được.</li>
+      <li>Sau cuộc thi, dữ liệu gốc được xóa; chỉ giữ số liệu tổng hợp.</li>
+    </ul>
+  </div>
+  </div>
+ </div>
 </section>
 
 <!-- ============ KHẢO SÁT ============ -->
-<section class="view wrap" data-view="khao-sat" hidden>
+<section class="view wrap wide" data-view="khao-sat" hidden>
   <h1>Khảo sát việc dùng AI trong học tập</h1>
   <p class="lead">Phiếu làm trên Google Forms, mở ở thẻ mới. Không hỏi tên, không tính điểm. Em chỉ làm khi phụ huynh đã ký phiếu đồng ý và em tự nguyện tham gia.</p>
+  <div class="grid2">
   <div class="card">
     <span class="tag">Phiếu 1</span>
     <h2>Khảo sát trước</h2>
@@ -142,6 +171,7 @@
     <h2>Khảo sát sau</h2>
     <p class="hint">Dành cho lớp đã học 2 tiết với bộ công cụ Đèn tín hiệu. Thầy cô sẽ báo khi mở.</p>
     <a class="btn" id="ks-sau" target="_blank" rel="noopener noreferrer" aria-disabled="true">Chưa mở</a>
+  </div>
   </div>
 </section>
 
@@ -161,10 +191,12 @@
 </section>
 
 <!-- ============ PHÂN LOẠI ============ -->
-<section class="view wrap" data-view="phan-loai" hidden>
+<section class="view wrap wide" data-view="phan-loai" hidden>
   <h1>Phân loại độc lập</h1>
   <p class="lead">Em chấm từng tiêu chí. Màu cuối là màu xấu nhất. Em không thấy kết quả của bạn kia cho đến khi cả hai đã khóa.</p>
   <div class="seg" role="group" aria-label="Đợt" data-dot><button data-v="1">Đợt 1 · thử</button><button data-v="2">Đợt 2 · chính thức</button></div>
+ <div class="split">
+  <div class="col">
   <div class="card" id="pl-gv" hidden>
     <p>Tài khoản giáo viên chỉ xem tiến độ, không chấm và không xem màu, để hai bộ mã giữ được tính độc lập.</p>
     <div id="pl-gv-rows" class="plain"></div>
@@ -186,7 +218,11 @@
     <label class="check"><input type="checkbox" id="pl-hard"><span>★ Khó quyết (em phân vân hơn 30 giây)</span></label>
     <button class="btn" id="pl-save" disabled>Lưu và sang câu tiếp</button>
   </div>
+  </div>
+  <div class="col">
   <div class="card" id="pl-done" hidden><div class="head"><h2>Các câu em đã chấm</h2><span class="tag" id="pl-ver"></span></div><div id="pl-list" class="plain"></div></div>
+  </div>
+ </div>
 </section>
 
 <!-- ============ ĐỐI KHỚP ============ -->
@@ -211,18 +247,20 @@
 </section>
 
 <!-- ============ LÀM SẠCH ============ -->
-<section class="view wrap" data-view="lam-sach" hidden>
+<section class="view wrap wide" data-view="lam-sach" hidden>
   <h1>Làm sạch dữ liệu</h1>
   <p class="lead">Đọc từng câu học sinh đã góp. Câu dùng được thì bấm Hợp lệ; câu có thông tin cá nhân, câu rác, câu không phải prompt thì ghi lý do rồi bấm Loại. Chỉ câu Hợp lệ mới vào danh sách chấm.</p>
   <div class="seg" role="group" aria-label="Đợt" data-dot><button data-v="1">Đợt 1 · thử</button><button data-v="2">Đợt 2 · chính thức</button></div>
   <div class="card"><div class="meter" id="ls-meter"></div><p class="hint" id="ls-lock" hidden>Đợt này đã có bạn khóa kết quả chấm nên không sửa trạng thái được nữa.</p></div>
-  <div id="ls-list" class="plain"></div>
+  <div id="ls-list" class="cards"></div>
 </section>
 
 <!-- ============ TÌNH HUỐNG ============ -->
-<section class="view wrap" data-view="tinh-huong" hidden>
+<section class="view wrap wide" data-view="tinh-huong" hidden>
   <h1>Ngân hàng tình huống</h1>
   <p class="lead">Mỗi học sinh nhận một tình huống và gõ câu lệnh em sẽ gửi cho AI. App phát tình huống đang có ít câu trả lời nhất, nên các tình huống được chia đều. Tình huống đã có câu trả lời thì chỉ bật hoặc tắt được, không sửa nội dung.</p>
+ <div class="split">
+  <div class="col side">
   <div class="card" id="th-form">
     <h2 id="th-form-title">Thêm tình huống</h2>
     <label class="f" for="th-mon">Môn<input type="text" id="th-mon" maxlength="40" placeholder="Ví dụ: Toán"></label>
@@ -245,14 +283,18 @@
       <textarea id="th-nv" maxlength="500"></textarea></label>
     <div class="rowbtn"><button class="btn sm" id="th-save">Lưu tình huống</button><button class="btn ghost sm" id="th-cancel" hidden>Bỏ sửa</button></div>
   </div>
+  </div>
+  <div class="col">
   <div id="th-list" class="plain"></div>
+  </div>
+ </div>
 </section>
 
 <!-- ============ QUẢN LÝ (GV) ============ -->
-<section class="view wrap" data-view="quan-ly" hidden>
+<section class="view wrap wide" data-view="quan-ly" hidden>
   <h1>Quản lý đợt thu</h1>
   <p class="lead">Chỉ tài khoản giáo viên. Thay đổi có hiệu lực ngay sau khi lưu.</p>
-  <div class="card">
+  <div class="card form2">
     <div class="plain"><span class="lbl">Trang Góp prompt đang</span>
       <div class="chips" id="ql-dot">
         <button class="chip" data-v="0" aria-pressed="false">Đóng</button>
@@ -281,7 +323,11 @@
 </section>
 </main>
 
-<nav class="tabs" aria-label="Điều hướng"><div id="tabs"></div></nav>
+<footer class="foot"><div class="wrap wide">
+  <div><strong>Đèn AI</strong><p>Dự án Khoa học kỹ thuật, lĩnh vực Khoa học xã hội và hành vi. Nhóm học sinh lớp 10A2, Trường THCS&amp;THPT Vĩnh Phong (An Giang), năm học 2026–2027.</p></div>
+  <div><strong>Căn cứ</strong><p>Bộ tiêu chí Đèn tín hiệu dựa trên Khung nội dung giáo dục AI cho học sinh phổ thông, Quyết định 2422/QĐ-BGDĐT ngày 18/8/2026.</p></div>
+  <div><strong>Dữ liệu</strong><p>Không lưu tên, email, địa chỉ IP hay mã thiết bị của học sinh. Kết quả của công cụ chỉ để tham khảo; thầy cô là người quyết định cuối cùng.</p></div>
+</div></footer>
 <div id="toast" role="status" hidden></div>
 <script type="module" src="js/app.js"></script>
 </body>

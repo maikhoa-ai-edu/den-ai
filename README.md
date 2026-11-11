@@ -80,6 +80,7 @@ api/                     Hàm Node.js chạy trên máy chủ Vercel
   _lib/phien.js          Kiểm tra mật khẩu, cấp và đọc vé đăng nhập
   _lib/http.js           Hàm tiện dùng chung
 supabase/                Lệnh tạo bảng, chạy theo thứ tự 001 đến 004
+google-forms/            Mã Apps Script tạo nhanh phiếu khảo sát 38 câu trên Google Forms
 scripts/chay-thu.js      Máy chủ thử trên máy cá nhân
 test/                    Kiểm tra tự động cho luật và công thức kappa
 docs/TRIEN-KHAI.md       Hướng dẫn đưa app lên mạng
