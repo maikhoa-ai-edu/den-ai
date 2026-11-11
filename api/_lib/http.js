@@ -26,3 +26,6 @@ export function linkFormHopLe(link) {
   const l = String(link || '').trim();
   return /^https:\/\/(docs\.google\.com\/forms\/|forms\.gle\/)/.test(l) ? l : '';
 }
+
+// Mã hiển thị của một prompt: 7 -> "P0007".
+export const maPrompt = id => 'P' + String(id).padStart(4, '0');

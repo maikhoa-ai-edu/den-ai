@@ -1,4 +1,4 @@
-# Hướng dẫn đưa Đèn AI lên mạng (bản 0.1)
+# Hướng dẫn đưa Đèn AI lên mạng
 
 Người làm: thầy (GV). Thời gian: khoảng 20 phút. Chi phí: 0 đồng.
 
@@ -41,7 +41,46 @@ Từ đây, mỗi lần kho GitHub có commit mới trên nhánh `main`, Vercel 
 
 Xong thì xóa các dòng thử trong bảng `prompt` trước khi mở cho học sinh.
 
-## Điều khiển hằng ngày (bảng `cau_hinh`, cột `gia_tri`)
+## Nâng lên bản 0.2 (khu nhóm)
+
+Làm đủ 3 bước, theo đúng thứ tự.
+
+1. **Supabase > SQL Editor:** dán toàn bộ `supabase/002_phan_loai.sql`, bấm Run. Table Editor phải có thêm bảng `phan_loai` và `khoa_cham`.
+2. **Vercel > Settings > Environment Variables:** thêm 4 biến.
+
+   | Biến | Giá trị |
+   | --- | --- |
+   | `MAT_KHAU_GV` | Mật khẩu của thầy, ít nhất 8 ký tự |
+   | `MAT_KHAU_HS1` | Mật khẩu của HS1, ít nhất 8 ký tự |
+   | `MAT_KHAU_HS2` | Mật khẩu của HS2, ít nhất 8 ký tự, khác HS1 |
+   | `BI_MAT_PHIEN` | Một chuỗi ngẫu nhiên ít nhất 16 ký tự (gõ bừa cũng được, không cần nhớ) |
+
+3. **Vercel > Deployments:** mở bản triển khai mới nhất > **Redeploy**. Biến môi trường chỉ có hiệu lực sau khi triển khai lại.
+
+Thầy đưa mật khẩu riêng cho từng em. HS1 không được biết mật khẩu của HS2 và ngược lại; nếu biết thì hai bộ mã không còn độc lập.
+
+| Việc kiểm tra | Kết quả đúng |
+| --- | --- |
+| Thẻ Nhóm > chọn GV > nhập mật khẩu | Vào trang Quản lý, thấy đủ các ô |
+| Quản lý > chọn "Mở đợt 1" > Lưu, rồi mở thẻ Góp prompt ở trình duyệt khác | Hiện biểu mẫu góp |
+| Đăng nhập HS1 > Làm sạch | Thấy các câu đã góp; bấm Hợp lệ thì nhãn đổi màu |
+| HS1 > Phân loại | Thấy câu Hợp lệ đầu tiên để chấm |
+| Đăng nhập HS2 > Phân loại | Số đã chấm là 0, không thấy gì của HS1; không có thẻ Làm sạch |
+| Đăng nhập GV > Phân loại | Chỉ thấy tiến độ của hai em |
+
+Nếu đăng nhập báo "Máy chủ đang gặp lỗi": thiếu một trong 4 biến, hoặc chưa Redeploy.
+
+**Trước khi chấm thật:** dấu khóa không gỡ được trong app. Khi chạy thử, đừng bấm khóa; nếu lỡ bấm, thầy xóa dòng tương ứng trong bảng `khoa_cham` trên Supabase.
+
+## Quy trình chấm một đợt
+
+1. GV mở đợt ở trang Quản lý; HS góp câu hỏi.
+2. Đủ số thì GV đóng đợt.
+3. HS1 rà hết ở trang Làm sạch (không còn câu "Chưa rà").
+4. HS1 và HS2 chấm ở trang Phân loại, mỗi em một máy, không trao đổi.
+5. Mỗi em chấm hết thì bấm khóa. Trang Đối khớp (bản 0.3) mở khi cả hai đã khóa.
+
+## Bảng `cau_hinh` (từ bản 0.2 thầy sửa ở trang Quản lý, không cần vào Supabase)
 
 | Khóa | Ý nghĩa |
 | --- | --- |
@@ -50,7 +89,7 @@ Xong thì xóa các dòng thử trong bảng `prompt` trước khi mở cho họ
 | `link_khao_sat_truoc`, `link_khao_sat_sau` | Dán link Google Forms; để trống thì nút hiện "Chưa mở" |
 | `gioi_han_5_phut` | Số lượt gửi tối đa trong 5 phút, mặc định 60 |
 
-## Làm sạch dữ liệu (HS1, bảng `prompt`)
+## Ý nghĩa các cột khi làm sạch (HS1 làm ở trang Làm sạch)
 
 - `can_ra = true`: câu có thể chứa tên người; đọc lại trước tiên.
 - Câu không dùng được: đổi `trang_thai` thành `loai` và ghi `ly_do_loai`. Không xóa dòng, để báo cáo đếm được số câu bị loại.

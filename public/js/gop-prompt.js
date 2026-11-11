@@ -36,7 +36,7 @@ async function gui(xacNhanKhongTenRieng) {
   const boiCanh = daChon('#gp-ctx');
 
   // Kiểm tra thông tin cá nhân ngay trên máy HS, trước khi gửi đi.
-  const tt = timThongTinCaNhan(noiDung + ' ' + mon);
+  const tt = timThongTinCaNhan(noiDung + ' | ' + mon);
   $('#gp-warn').hidden = !tt.chan.length;
   $('#gp-soft').hidden = true;
   if (tt.chan.length) {
@@ -73,8 +73,14 @@ export async function khoiDongGopPrompt() {
   $('#gp-soft').querySelector('.warn').classList.add('soft');
   $('#gp-send').onclick = () => gui(false);
   $('#gp-soft-ok').onclick = () => gui(true);
-  const tt = await layTrangThai();
+  await veGopPrompt();
+}
+
+// Gọi mỗi lần mở trang, để thấy ngay khi thầy mở hoặc đóng đợt thu.
+export async function veGopPrompt(taiLai = false) {
+  const tt = await layTrangThai(taiLai);
   if (tt.ma !== 200) {
+    $('#gp-progress').hidden = $('#gp-form').hidden = $('#gp-done').hidden = true;
     $('#gp-closed').hidden = false;
     $('#gp-closed').querySelector('p').textContent = tt.loi || 'Chưa tải được trạng thái. Em tải lại trang nhé.';
     return;

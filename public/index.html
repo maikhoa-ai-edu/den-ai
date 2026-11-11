@@ -13,7 +13,7 @@
 <body>
 <header class="top"><div class="wrap">
   <div class="brand"><span class="lamp all" aria-hidden="true"><i></i><i></i><i></i></span><span>Đèn AI<small>Hỏi để hiểu hay hỏi để chép?</small></span></div>
-  <span class="who">Ẩn danh</span>
+  <span class="who" id="who">Ẩn danh</span>
 </div></header>
 
 <main>
@@ -125,11 +125,77 @@
   </div>
 </section>
 
-<!-- ============ NHÓM ============ -->
+<!-- ============ NHÓM: ĐĂNG NHẬP ============ -->
 <section class="view wrap" data-view="nhom" hidden>
   <h1>Khu vực nhóm nghiên cứu</h1>
   <p class="lead">Chỉ 3 tài khoản được vào: giáo viên hướng dẫn và hai học sinh thực hiện đề tài.</p>
-  <div class="card"><h2>Đang xây dựng</h2><p class="hint">Đăng nhập, Phân loại độc lập và Đối khớp sẽ có ở bản 0.2.</p></div>
+  <form class="card" id="lg-form">
+    <div class="acct" id="lg-acct">
+      <button type="button" data-u="GV" aria-pressed="false"><span>Giáo viên hướng dẫn<small>Xem tiến độ, làm sạch, mở và đóng đợt thu</small></span><span class="code">GV</span></button>
+      <button type="button" data-u="HS1" aria-pressed="false"><span>Học sinh 1<small>Phương pháp và dữ liệu</small></span><span class="code">HS1</span></button>
+      <button type="button" data-u="HS2" aria-pressed="false"><span>Học sinh 2<small>Tiêu chí và công cụ</small></span><span class="code">HS2</span></button>
+    </div>
+    <label class="f" for="lg-pw">Mật khẩu<input type="password" id="lg-pw" autocomplete="current-password"></label>
+    <button class="btn" id="lg-go">Đăng nhập</button>
+  </form>
+</section>
+
+<!-- ============ PHÂN LOẠI ============ -->
+<section class="view wrap" data-view="phan-loai" hidden>
+  <h1>Phân loại độc lập</h1>
+  <p class="lead">Em chấm từng tiêu chí. Màu cuối là màu xấu nhất. Em không thấy kết quả của bạn kia cho đến khi cả hai đã khóa.</p>
+  <div class="seg" role="group" aria-label="Đợt" data-dot><button data-v="1">Đợt 1 · thử</button><button data-v="2">Đợt 2 · chính thức</button></div>
+  <div class="card" id="pl-gv" hidden>
+    <p>Tài khoản giáo viên chỉ xem tiến độ, không chấm và không xem màu, để hai bộ mã giữ được tính độc lập.</p>
+    <div id="pl-gv-rows" class="plain"></div>
+  </div>
+  <div class="card" id="pl-meter" hidden>
+    <div class="meter"><span id="pl-who"></span><span><b id="pl-n">0</b> / <span id="pl-total">0</span></span></div>
+    <div class="prog"><b id="pl-bar" style="width:0"></b></div>
+  </div>
+  <div class="card" id="pl-note" hidden><h2 id="pl-note-title"></h2><p class="hint" id="pl-note-text"></p><button class="btn" id="pl-lock" hidden>Khóa kết quả của em</button></div>
+  <div class="card" id="pl-card" hidden>
+    <div class="head"><span class="code" id="pl-code"></span><span class="tag" id="pl-ctx"></span></div>
+    <div class="quote" id="pl-text"></div>
+    <div id="pl-picks"></div>
+    <div class="pick"><div class="n">TC4. Minh bạch, kiểm chứng<small>Chỉ có câu lệnh, chưa có kết quả</small></div><span class="pill na">Không chấm</span></div>
+    <label class="check"><input type="checkbox" id="pl-abs"><span>Thuộc nhóm Đỏ tuyệt đối (gian lận kiểm tra, giả mạo người thật, xúc phạm)</span></label>
+    <div class="vs"><strong>Màu cuối:</strong><span id="pl-final-box"></span></div>
+    <label class="f" for="pl-why">Lý do (1 câu, nêu tiêu chí quyết định)<input type="text" id="pl-why" maxlength="300"></label>
+    <label class="check"><input type="checkbox" id="pl-hard"><span>★ Khó quyết (em phân vân hơn 30 giây)</span></label>
+    <button class="btn" id="pl-save" disabled>Lưu và sang câu tiếp</button>
+  </div>
+  <div class="card" id="pl-done" hidden><div class="head"><h2>Các câu em đã chấm</h2><span class="tag" id="pl-ver"></span></div><div id="pl-list" class="plain"></div></div>
+</section>
+
+<!-- ============ LÀM SẠCH ============ -->
+<section class="view wrap" data-view="lam-sach" hidden>
+  <h1>Làm sạch dữ liệu</h1>
+  <p class="lead">Đọc từng câu học sinh đã góp. Câu dùng được thì bấm Hợp lệ; câu có thông tin cá nhân, câu rác, câu không phải prompt thì ghi lý do rồi bấm Loại. Chỉ câu Hợp lệ mới vào danh sách chấm.</p>
+  <div class="seg" role="group" aria-label="Đợt" data-dot><button data-v="1">Đợt 1 · thử</button><button data-v="2">Đợt 2 · chính thức</button></div>
+  <div class="card"><div class="meter" id="ls-meter"></div><p class="hint" id="ls-lock" hidden>Đợt này đã có bạn khóa kết quả chấm nên không sửa trạng thái được nữa.</p></div>
+  <div id="ls-list" class="plain"></div>
+</section>
+
+<!-- ============ QUẢN LÝ (GV) ============ -->
+<section class="view wrap" data-view="quan-ly" hidden>
+  <h1>Quản lý đợt thu</h1>
+  <p class="lead">Chỉ tài khoản giáo viên. Thay đổi có hiệu lực ngay sau khi lưu.</p>
+  <div class="card">
+    <div class="plain"><span class="lbl">Trang Góp prompt đang</span>
+      <div class="chips" id="ql-dot">
+        <button class="chip" data-v="0" aria-pressed="false">Đóng</button>
+        <button class="chip" data-v="1" aria-pressed="false">Mở đợt 1 · thử</button>
+        <button class="chip" data-v="2" aria-pressed="false">Mở đợt 2 · chính thức</button>
+      </div></div>
+    <label class="f" for="ql-mt1">Số prompt cần thu ở đợt 1<input type="text" inputmode="numeric" id="ql-mt1"></label>
+    <label class="f" for="ql-mt2">Số prompt cần thu ở đợt 2<input type="text" inputmode="numeric" id="ql-mt2"></label>
+    <label class="f" for="ql-truoc">Link Google Forms – khảo sát trước<input type="text" inputmode="url" id="ql-truoc" placeholder="Để trống = nút chưa mở"></label>
+    <label class="f" for="ql-sau">Link Google Forms – khảo sát sau<input type="text" inputmode="url" id="ql-sau" placeholder="Để trống = nút chưa mở"></label>
+    <label class="f" for="ql-pb">Phiên bản tiêu chí đang dùng để chấm<input type="text" id="ql-pb" placeholder="v0.1"></label>
+    <p class="hint">Mỗi kết quả chấm được lưu kèm phiên bản tiêu chí lúc chấm. Đổi thành v1.0 khi nhóm chốt tiêu chí.</p>
+    <button class="btn" id="ql-save">Lưu</button>
+  </div>
 </section>
 </main>
 

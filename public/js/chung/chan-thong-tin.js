@@ -25,7 +25,7 @@ const LUAT_CHAN = [
 ];
 
 const LUAT_NHAC = [
-  ['tên thầy cô hoặc người quen', new RegExp(`${DAU}(?:[Tt]hầy|[Cc]ô|[Aa]nh|[Cc]hị|[Cc]hú|[Dd]ì)\\s+${TEN}`, 'u')],
+  ['tên thầy cô hoặc người quen', new RegExp(`${DAU}(?:[Tt]hầy|[Cc]ô|anh|chị|chú|dì)\\s+${TEN}`, 'u')],
   ['họ và tên', new RegExp(`${DAU}(?:${HO.join('|')})(?:\\s+${TEN}){1,3}`, 'u')],
   ['tên lớp', new RegExp(`${DAU}lớp\\s*\\d{1,2}\\s?[A-Za-z]\\d{0,2}(?![\\p{L}\\p{N}])`, 'iu')]
 ];

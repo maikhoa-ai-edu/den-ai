@@ -25,7 +25,7 @@ export default async function handler(req, res) {
   if (![10, 11, 12].includes(khoi)) return tuChoi(400, 'Em chọn khối lớp trước khi gửi.');
 
   // 2. Chặn thông tin cá nhân (lần hai, sau khi trình duyệt đã kiểm tra)
-  const tt = timThongTinCaNhan(noiDung + ' ' + mon);
+  const tt = timThongTinCaNhan(noiDung + ' | ' + mon);
   if (tt.chan.length) return tuChoi(422, 'Câu này có vẻ chứa ' + tt.chan.join(', ') + '. Em xóa đi rồi gửi lại nhé.', { chan: tt.chan });
   if (tt.nhac.length && b.xac_nhan_khong_ten_rieng !== true) {
     return tuChoi(409, 'Câu này có thể chứa ' + tt.nhac.join(', ') + '. Nếu là người thật, em đổi cách gọi rồi gửi lại.', { nhac: tt.nhac });

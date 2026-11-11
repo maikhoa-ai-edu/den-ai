@@ -23,7 +23,9 @@ test('không chặn câu hỏi học tập bình thường', () => {
     'Mình giải ra x = 4, kiểm tra giúp mình sai ở bước nào',
     'Một bạn trong lớp hay bị bắt nạt, mình nên làm gì?',
     'Bạn A và bạn B cùng chạy 100 m, tính vận tốc trung bình',
-    'Tính 123456 x 789'
+    'Tính 123456 x 789',
+    'Dịch đoạn văn này sang tiếng Anh | Văn',
+    'Làm bài tập Anh Văn unit 3 thế nào cho nhanh hiểu'
   ]) assert.deepEqual(timThongTinCaNhan(cau), { chan: [], nhac: [] }, cau);
 });
 

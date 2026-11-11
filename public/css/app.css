@@ -146,3 +146,7 @@ nav.tabs a[aria-current="page"]{color:var(--accent);font-weight:600;border-top-c
 a.btn{display:block;text-align:center;text-decoration:none}
 a.btn[aria-disabled="true"]{opacity:.45;pointer-events:none}
 .warn.soft{border-left-color:var(--wait);background:color-mix(in srgb,var(--wait) 12%,var(--surface))}
+.btn.sm{padding:8px 14px;min-height:40px;font-size:14px}
+.who button{border:0;background:none;padding:0;text-decoration:underline;cursor:pointer}
+.rowbtn{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.rowbtn input{flex:1;min-width:160px}

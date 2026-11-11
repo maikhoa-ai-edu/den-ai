@@ -1,11 +1,17 @@
 // Khung chung: chuyển trang theo dấu # trên địa chỉ, thông báo nổi, vài hàm tiện dùng.
 
 import { khoiDongKiemTra } from './kiem-tra.js';
-import { khoiDongGopPrompt } from './gop-prompt.js';
+import { khoiDongGopPrompt, veGopPrompt } from './gop-prompt.js';
 import { khoiDongKhaoSat } from './khao-sat.js';
+import { khoiDongNhom, layVai, dangXuat, veQuanLy } from './nhom.js';
+import { khoiDongPhanLoai, vePhanLoai } from './phan-loai.js';
+import { khoiDongLamSach, veLamSach } from './lam-sach.js';
 
 export const $ = s => document.querySelector(s);
 export const $$ = s => [...document.querySelectorAll(s)];
+
+// Chữ do người dùng nhập phải qua hàm này trước khi chèn vào trang.
+export const sach = t => String(t ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
 let henGio;
 export function thongBao(loi) {
@@ -25,10 +31,9 @@ export function nhomChon(hop) {
 export const daChon = hop => $(hop + ' [aria-pressed="true"]')?.dataset.v;
 
 // Gọi hàm phía máy chủ. Trình duyệt không bao giờ nối thẳng tới Supabase.
-export async function goiMayChu(duong, duLieu) {
-  const tuyChon = duLieu
-    ? { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(duLieu) }
-    : {};
+export async function goiMayChu(duong, duLieu, phuongThuc) {
+  const tuyChon = { method: phuongThuc || (duLieu ? 'POST' : 'GET') };
+  if (duLieu) Object.assign(tuyChon, { headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(duLieu) });
   try {
     const tl = await fetch(duong, tuyChon);
     const kq = await tl.json().catch(() => ({}));
@@ -45,12 +50,37 @@ export function layTrangThai(taiLai = false) {
   return trangThai;
 }
 
-const THE = [['kiem-tra', 'Kiểm tra'], ['gop-prompt', 'Góp prompt'], ['khao-sat', 'Khảo sát'], ['nhom', 'Nhóm']];
-function chuyenTrang() {
+// Đợt đang xem ở khu nhóm (Phân loại và Làm sạch dùng chung).
+export const nhom = { dot: 1 };
+
+const THE_CHUNG = [['kiem-tra', 'Kiểm tra'], ['gop-prompt', 'Góp prompt'], ['khao-sat', 'Khảo sát'], ['nhom', 'Nhóm']];
+const THE_NHOM = [
+  ['phan-loai', 'Phân loại', ['GV', 'HS1', 'HS2'], vePhanLoai],
+  ['lam-sach', 'Làm sạch', ['GV', 'HS1'], veLamSach],
+  ['quan-ly', 'Quản lý', ['GV'], veQuanLy]
+];
+
+let daVe = false; // lần vẽ đầu tiên đã có khoiDongGopPrompt tải trạng thái
+export function chuyenTrang() {
+  const vai = layVai();
   let t = location.hash.slice(1) || 'kiem-tra';
-  if (!THE.some(([ma]) => ma === t)) t = 'kiem-tra';
+  const cuaNhom = THE_NHOM.find(([ma]) => ma === t);
+  if (cuaNhom && !(vai && cuaNhom[2].includes(vai))) t = vai ? 'phan-loai' : 'nhom';
+  else if (!cuaNhom && !THE_CHUNG.some(([ma]) => ma === t)) t = 'kiem-tra';
+  if (t === 'nhom' && vai) t = 'phan-loai';
+
   $$('section.view').forEach(s => (s.hidden = s.dataset.view !== t));
-  $('#tabs').innerHTML = THE.map(([ma, ten]) => `<a href="#${ma}" ${ma === t ? 'aria-current="page"' : ''}>${ten}</a>`).join('');
+  const trangNhom = THE_NHOM.find(([ma]) => ma === t);
+  const the = trangNhom
+    ? [...THE_NHOM.filter(x => x[2].includes(vai)), ['kiem-tra', 'Trang HS']]
+    : THE_CHUNG;
+  $('#tabs').innerHTML = the.map(([ma, ten]) => `<a href="#${ma}" ${ma === t ? 'aria-current="page"' : ''}>${ten}</a>`).join('');
+  $('#who').innerHTML = vai ? `${vai} · <button id="out">Thoát</button>` : 'Ẩn danh';
+  if (vai) $('#out').onclick = dangXuat;
+  $$('[data-dot] button').forEach(n => n.setAttribute('aria-pressed', Number(n.dataset.v) === nhom.dot));
+  if (trangNhom) trangNhom[3]();
+  if (t === 'gop-prompt' && daVe) veGopPrompt(true);
+  daVe = true;
   window.scrollTo(0, 0);
 }
 addEventListener('hashchange', chuyenTrang);
@@ -58,4 +88,7 @@ addEventListener('hashchange', chuyenTrang);
 khoiDongKiemTra();
 khoiDongGopPrompt();
 khoiDongKhaoSat();
-chuyenTrang();
+khoiDongPhanLoai();
+khoiDongLamSach();
+$$('[data-dot] button').forEach(n => (n.onclick = () => { nhom.dot = Number(n.dataset.v); chuyenTrang(); }));
+khoiDongNhom().then(chuyenTrang);
