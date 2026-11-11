@@ -233,3 +233,17 @@ section.view.wide>.seg{max-width:560px}
   .form2>.plain:first-child,.form2>.hint,.form2>.btn{grid-column:1/-1}
   .form2>.btn{justify-self:start;min-width:160px}
 }
+
+/* ================= Nhật ký, in phụ lục ================= */
+input[type=date]{width:100%;border:1px solid var(--line);border-radius:10px;background:var(--bg);padding:11px 12px;min-height:46px}
+.onlyprint{display:none}
+/* Thanh dưới có từ 6 thẻ (tài khoản GV trên điện thoại): thu nhỏ chữ cho vừa. */
+@media (max-width:899px){nav.tabs div:has(a:nth-child(6)) a{font-size:11px}}
+@media print{
+  header.top,nav.tabs,.foot,.noprint,#toast,[data-dot]{display:none!important}
+  .onlyprint{display:block}
+  body{background:#fff;padding:0;font-size:12pt}
+  .card{box-shadow:none;break-inside:avoid;border-color:#999}
+  .split{display:block}
+  #nk-list{gap:8px}
+}

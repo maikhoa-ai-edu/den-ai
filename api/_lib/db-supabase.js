@@ -108,3 +108,14 @@ export async function demTheoTinhHuong(dot) {
   for (const d of lay(await q).data) dem.set(d.tinh_huong_id, (dem.get(d.tinh_huong_id) || 0) + 1);
   return dem;
 }
+
+// ---------- nhật ký ----------
+export async function dsNhatKy() {
+  return lay(await sb().from('nhat_ky').select('*').order('ngay', { ascending: false }).order('id', { ascending: false })).data;
+}
+export async function luuNhatKy(dong) {
+  const { id, ...cot } = dong;
+  cot.cap_nhat_luc = new Date().toISOString();
+  if (id) lay(await sb().from('nhat_ky').update(cot).eq('id', id));
+  else lay(await sb().from('nhat_ky').insert(cot));
+}

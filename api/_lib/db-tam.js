@@ -58,3 +58,12 @@ export async function demTheoTinhHuong(dot) {
   for (const p of prompt) if (p.tinh_huong_id && (!dot || p.dot === dot)) dem.set(p.tinh_huong_id, (dem.get(p.tinh_huong_id) || 0) + 1);
   return dem;
 }
+
+const nhatKy = [];
+export async function dsNhatKy() {
+  return nhatKy.map(d => ({ ...d })).sort((a, b) => (a.ngay < b.ngay ? 1 : a.ngay > b.ngay ? -1 : b.id - a.id));
+}
+export async function luuNhatKy(dong) {
+  const cu = nhatKy.find(d => d.id === dong.id);
+  if (cu) Object.assign(cu, dong); else nhatKy.push({ nhan_xet_gv: '', ...dong, id: nhatKy.length + 1 });
+}

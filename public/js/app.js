@@ -8,6 +8,7 @@ import { khoiDongPhanLoai, vePhanLoai } from './phan-loai.js';
 import { khoiDongLamSach, veLamSach } from './lam-sach.js';
 import { veDoiKhop } from './doi-khop.js';
 import { khoiDongTinhHuong, veTinhHuong } from './tinh-huong.js';
+import { khoiDongNhatKy, veNhatKy } from './nhat-ky.js';
 
 export const $ = s => document.querySelector(s);
 export const $$ = s => [...document.querySelectorAll(s)];
@@ -61,6 +62,7 @@ const THE_NHOM = [
   ['lam-sach', 'Làm sạch', ['GV', 'HS1'], veLamSach],
   ['doi-khop', 'Đối khớp', ['GV', 'HS1', 'HS2'], veDoiKhop],
   ['tinh-huong', 'Tình huống', ['GV', 'HS1', 'HS2'], veTinhHuong],
+  ['nhat-ky', 'Nhật ký', ['GV', 'HS1', 'HS2'], veNhatKy],
   ['quan-ly', 'Quản lý', ['GV'], veQuanLy]
 ];
 
@@ -95,5 +97,6 @@ khoiDongKhaoSat();
 khoiDongPhanLoai();
 khoiDongLamSach();
 khoiDongTinhHuong();
+khoiDongNhatKy();
 $$('[data-dot] button').forEach(n => (n.onclick = () => { nhom.dot = Number(n.dataset.v); chuyenTrang(); }));
 khoiDongNhom().then(chuyenTrang);

@@ -290,6 +290,48 @@
  </div>
 </section>
 
+<!-- ============ NHẬT KÝ ============ -->
+<section class="view wrap wide" data-view="nhat-ky" hidden>
+  <h1>Nhật ký dự án</h1>
+  <p class="lead noprint">Hai em tự ghi mỗi ngày: đã làm gì, minh chứng ở đâu, việc tiếp theo là gì. Có dùng AI thì khai báo ngay trong lần ghi đó. Giáo viên chỉ đọc và nhận xét. Không ghi họ tên bạn học vào nhật ký.</p>
+ <div class="split">
+  <div class="col side noprint">
+  <div class="card" id="nk-form">
+    <h2 id="nk-form-title">Ghi nhật ký</h2>
+    <label class="f" for="nk-ngay">Ngày<input type="date" id="nk-ngay"></label>
+    <label class="f" for="nk-viec">Việc em đã làm
+      <textarea id="nk-viec" maxlength="2000" placeholder="Ví dụ: Rà 22 câu ở trang Làm sạch, loại 3 câu có tên bạn học"></textarea></label>
+    <label class="f" for="nk-mc">Minh chứng (tệp, ảnh, link, trang trong app)
+      <input type="text" id="nk-mc" maxlength="1000" placeholder="Ví dụ: trang Làm sạch, đợt 1"></label>
+    <label class="f" for="nk-tiep">Việc tiếp theo
+      <input type="text" id="nk-tiep" maxlength="1000" placeholder="Ví dụ: Chấm 20 câu đầu trước thứ Sáu"></label>
+    <label class="check"><input type="checkbox" id="nk-ai"><span>Hôm nay em có dùng AI cho việc này</span></label>
+    <div class="ai" id="nk-ai-box" hidden>
+      <strong>Khai báo dùng AI (ghi đủ 4 mục)</strong>
+      <label class="f" for="nk-ai-cc">Công cụ<input type="text" id="nk-ai-cc" maxlength="100" placeholder="Ví dụ: Claude, Gemini"></label>
+      <label class="f" for="nk-ai-md">Mục đích: em đã hỏi hoặc nhờ gì<input type="text" id="nk-ai-md" maxlength="500"></label>
+      <label class="f" for="nk-ai-pv">Phạm vi AI hỗ trợ: AI làm phần nào<input type="text" id="nk-ai-pv" maxlength="500"></label>
+      <label class="f" for="nk-ai-kc">Em đã kiểm chứng, sửa lại những gì<input type="text" id="nk-ai-kc" maxlength="500"></label>
+      <span class="hint">Phần em tự làm chính là ô "Việc em đã làm" ở trên.</span>
+    </div>
+    <div class="rowbtn"><button class="btn sm" id="nk-save">Lưu nhật ký</button><button class="btn ghost sm" id="nk-cancel" hidden>Bỏ sửa</button></div>
+  </div>
+  </div>
+  <div class="col">
+  <div class="card noprint">
+    <div class="chips" id="nk-loc">
+      <button class="chip" data-v="tat-ca" aria-pressed="true">Tất cả</button>
+      <button class="chip" data-v="HS1" aria-pressed="false">HS1</button>
+      <button class="chip" data-v="HS2" aria-pressed="false">HS2</button>
+      <button class="chip" data-v="ai" aria-pressed="false">Có dùng AI</button>
+    </div>
+    <div class="rowbtn"><span class="hint" id="nk-dem"></span><button class="btn ghost sm" id="nk-csv" style="margin-left:auto">Xuất CSV</button><button class="btn ghost sm" id="nk-in">In phụ lục</button></div>
+  </div>
+  <div id="nk-list" class="plain"></div>
+  </div>
+ </div>
+</section>
+
 <!-- ============ QUẢN LÝ (GV) ============ -->
 <section class="view wrap wide" data-view="quan-ly" hidden>
   <h1>Quản lý đợt thu</h1>

@@ -4,7 +4,7 @@ Webapp của dự án Khoa học kỹ thuật **"Hỏi để hiểu hay hỏi đ
 
 App giúp học sinh xem một câu hỏi gửi AI nên bật đèn **xanh, vàng hay đỏ** theo bộ tiêu chí Đèn tín hiệu AI, và giúp nhóm nghiên cứu thu câu hỏi ẩn danh.
 
-## Bản 0.4 có gì
+## Bản 0.6 có gì
 
 | Trang | Ai dùng | Việc làm được |
 | --- | --- | --- |
@@ -15,9 +15,10 @@ App giúp học sinh xem một câu hỏi gửi AI nên bật đèn **xanh, vàn
 | Phân loại | HS1, HS2 | Chấm 4 tiêu chí cho từng câu Hợp lệ, màu cuối là màu xấu nhất, ô Đỏ tuyệt đối, lý do, đánh dấu ca khó. Chấm hết thì khóa. GV chỉ xem tiến độ. |
 | Đối khớp | HS1, HS2, GV | Chỉ mở khi cả hai em đã khóa. Tỷ lệ đồng thuận, Cohen's kappa, ma trận 3×3, số câu chấm giống nhau theo từng tiêu chí, danh sách ca lệch. Hai em ghi nguyên nhân, đề xuất sửa tiêu chí, màu thống nhất. GV chỉ xem. |
 | Tình huống | HS1, HS2, GV | Ngân hàng tình huống: thêm, sửa, bật, tắt. Tình huống đã có câu trả lời thì chỉ bật hoặc tắt được. |
+| Nhật ký | HS1, HS2, GV | Hai em ghi theo ngày: việc đã làm, minh chứng, việc tiếp theo; có dùng AI thì khai báo đủ 4 mục. Mỗi em chỉ sửa được lần ghi của mình. GV chỉ đọc và nhận xét. Xuất CSV hoặc in làm phụ lục. |
 | Quản lý | GV | Mở, đóng đợt thu; kiểu thu của từng đợt; số prompt cần thu; link hai phiếu khảo sát; phiên bản tiêu chí. |
 
-Chưa có: AI chấm thứ ba, Số liệu, Nhật ký, chế độ Giáo viên của trang Kiểm tra.
+Chưa có: AI chấm thứ ba, Số liệu, chế độ Giáo viên của trang Kiểm tra.
 
 ## Hai kiểu thu prompt
 
@@ -62,6 +63,7 @@ public/                  Phần chạy trên trình duyệt
   js/phan-loai.js        Trang Phân loại
   js/doi-khop.js         Trang Đối khớp
   js/tinh-huong.js       Trang Tình huống
+  js/nhat-ky.js          Trang Nhật ký dự án
   js/chung/luat-tam.js         Luật chấm tạm theo tiêu chí v0.1
   js/chung/thong-ke.js         Tỷ lệ đồng thuận, Cohen's kappa, ma trận
   js/chung/chan-thong-tin.js   Phát hiện thông tin cá nhân (trình duyệt và máy chủ dùng chung)
@@ -72,6 +74,7 @@ api/                     Hàm Node.js chạy trên máy chủ Vercel
   lam-sach.js            Danh sách câu và đổi trạng thái
   phan-loai.js           Lấy câu cần chấm, lưu kết quả, khóa
   tinh-huong.js          Phát tình huống cho HS; quản lý ngân hàng tình huống
+  nhat-ky.js             Nhật ký dự án và nhận xét của GV
   doi-khop.js            Số liệu đồng thuận, ca lệch, ghi kết luận
   cau-hinh.js            Đọc, sửa cấu hình (GV)
   _lib/db.js             Chọn nơi lưu: Supabase hoặc bộ nhớ tạm khi chạy thử
@@ -79,7 +82,7 @@ api/                     Hàm Node.js chạy trên máy chủ Vercel
   _lib/db-tam.js         Bộ nhớ tạm khi chạy thử trên máy
   _lib/phien.js          Kiểm tra mật khẩu, cấp và đọc vé đăng nhập
   _lib/http.js           Hàm tiện dùng chung
-supabase/                Lệnh tạo bảng, chạy theo thứ tự 001 đến 004
+supabase/                Lệnh tạo bảng, chạy theo thứ tự 001 đến 005
 google-forms/            Mã Apps Script tạo nhanh phiếu khảo sát 38 câu trên Google Forms
 scripts/chay-thu.js      Máy chủ thử trên máy cá nhân
 test/                    Kiểm tra tự động cho luật và công thức kappa

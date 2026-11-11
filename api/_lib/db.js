@@ -13,5 +13,6 @@ export const {
   dsPrompt, layPrompt, capNhatPrompt,
   dsPhanLoai, luuPhanLoai, dsKhoa, themKhoa,
   dsDoiKhop, luuDoiKhop,
-  dsTinhHuong, luuTinhHuong, demTheoTinhHuong
+  dsTinhHuong, luuTinhHuong, demTheoTinhHuong,
+  dsNhatKy, luuNhatKy
 } = db;

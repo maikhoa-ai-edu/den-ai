@@ -94,6 +94,14 @@ Tệp này tạo bảng `tinh_huong`, thêm 3 cột vào bảng `prompt` và ch�
 
 Xong thì đánh dấu Loại các câu thử (ghi lý do "câu thử của nhóm") trước khi mở cho học sinh.
 
+## Nâng lên bản 0.6 (Nhật ký dự án)
+
+Một bước: Supabase > SQL Editor, dán toàn bộ `supabase/005_nhat_ky.sql`, bấm Run. Chưa chạy thì chỉ riêng thẻ Nhật ký báo lỗi, các trang khác không ảnh hưởng.
+
+Kiểm tra: đăng nhập HS1 > thẻ Nhật ký > ghi một lần có tích "có dùng AI" > đăng nhập GV thấy lần ghi đó và ô nhận xét.
+
+Làm phụ lục báo cáo: nút **Xuất CSV** (mở bằng Excel hoặc Google Sheets, sắp từ ngày đầu đến ngày cuối) hoặc nút **In phụ lục** (chọn "Lưu dưới dạng PDF" trong hộp thoại in). Lọc "Có dùng AI" trước khi in thì được riêng nhật ký sử dụng AI.
+
 ## Quy trình chấm một đợt
 
 0. Đợt giao tình huống: nhóm rà ngân hàng tình huống ở trang Tình huống trước khi mở. Sau khi có câu trả lời, nội dung tình huống không sửa được.
