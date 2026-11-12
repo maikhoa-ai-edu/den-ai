@@ -102,6 +102,14 @@ Kiểm tra: đăng nhập HS1 > thẻ Nhật ký > ghi một lần có tích "c�
 
 Làm phụ lục báo cáo: nút **Xuất CSV** (mở bằng Excel hoặc Google Sheets, sắp từ ngày đầu đến ngày cuối) hoặc nút **In phụ lục** (chọn "Lưu dưới dạng PDF" trong hộp thoại in). Lọc "Có dùng AI" trước khi in thì được riêng nhật ký sử dụng AI.
 
+## Nâng lên bản 0.7 (bộ 20 tình huống theo khối)
+
+Một bước: Supabase > SQL Editor, dán toàn bộ `supabase/006_tinh_huong_20.sql`, bấm Run.
+
+Tệp này **tắt** các tình huống đang có (không xóa, câu trả lời đã thu vẫn còn) và thêm 20 tình huống khởi thảo: mỗi khối 5, dùng chung 5. Chạy lại lần hai không thêm trùng. Muốn dùng lại tình huống cũ nào thì bấm Bật ở trang Tình huống.
+
+Kiểm tra: thẻ Tình huống phải ghi "khối 10 có 10 tình huống, khối 11 có 10, khối 12 có 10". Dùng bộ lọc Khối 10, Khối 11, Khối 12, Dùng chung để rà từng nhóm.
+
 ## Quy trình chấm một đợt
 
 0. Đợt giao tình huống: nhóm rà ngân hàng tình huống ở trang Tình huống trước khi mở. Sau khi có câu trả lời, nội dung tình huống không sửa được.

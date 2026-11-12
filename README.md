@@ -4,7 +4,7 @@ Webapp của dự án Khoa học kỹ thuật **"Hỏi để hiểu hay hỏi đ
 
 App giúp học sinh xem một câu hỏi gửi AI nên bật đèn **xanh, vàng hay đỏ** theo bộ tiêu chí Đèn tín hiệu AI, và giúp nhóm nghiên cứu thu câu hỏi ẩn danh.
 
-## Bản 0.6 có gì
+## Bản 0.7 có gì
 
 | Trang | Ai dùng | Việc làm được |
 | --- | --- | --- |
@@ -28,6 +28,7 @@ Chưa có: AI chấm thứ ba, Số liệu, chế độ Giáo viên của trang 
 | Dùng cho | Đợt 1: thử bộ tiêu chí, phủ đều môn và bối cảnh | Đợt 2: mô tả hành vi dùng AI thật |
 | Bối cảnh, môn | Lấy từ tình huống, do máy chủ ghi | HS tự chọn |
 
+- HS chọn khối trước; app chỉ phát tình huống của đúng khối đó hoặc tình huống dùng chung cho cả ba khối.
 - App phát tình huống đang có ít câu trả lời nhất trong đợt, nên các tình huống được chia đều.
 - HS chọn "Em không dùng AI cho việc này" thì dòng đó vẫn được ghi để đếm, nhưng không vào danh sách chấm và không tính vào tiến độ.
 - Mỗi prompt lưu kèm kiểu thu (`kieu_thu`), nên hai loại dữ liệu không lẫn vào nhau khi phân tích.
@@ -82,7 +83,7 @@ api/                     Hàm Node.js chạy trên máy chủ Vercel
   _lib/db-tam.js         Bộ nhớ tạm khi chạy thử trên máy
   _lib/phien.js          Kiểm tra mật khẩu, cấp và đọc vé đăng nhập
   _lib/http.js           Hàm tiện dùng chung
-supabase/                Lệnh tạo bảng, chạy theo thứ tự 001 đến 005
+supabase/                Lệnh tạo bảng, chạy theo thứ tự 001 đến 006
 google-forms/            Mã Apps Script tạo nhanh phiếu khảo sát 38 câu trên Google Forms
 scripts/chay-thu.js      Máy chủ thử trên máy cá nhân
 test/                    Kiểm tra tự động cho luật và công thức kappa

@@ -95,7 +95,7 @@
   <div class="card" id="gp-closed" hidden><h2>Chưa mở đợt góp câu hỏi</h2><p class="hint">Nhóm nghiên cứu sẽ mở khi phát phiếu cho lớp em. Em quay lại sau nhé.</p></div>
   <div class="card" id="gp-done" hidden><h2>Cảm ơn em đã góp câu hỏi</h2><p class="hint">Câu hỏi đã được ghi nhận ẩn danh. Mỗi bạn chỉ góp một câu trong mỗi đợt. Em có thể thử công cụ ở thẻ Kiểm tra.</p></div>
   <div class="card" id="gp-form" hidden>
-    <div class="plain"><span class="lbl">Em học khối</span>
+    <div class="plain"><span class="lbl">Em đang học khối nào?</span>
       <div class="chips" id="gp-khoi">
         <button class="chip" data-v="10" aria-pressed="false">Khối 10</button>
         <button class="chip" data-v="11" aria-pressed="false">Khối 11</button>
@@ -285,6 +285,17 @@
   </div>
   </div>
   <div class="col">
+  <div class="card">
+    <div class="chips" id="th-loc">
+      <button class="chip" data-v="tat-ca" aria-pressed="true">Tất cả</button>
+      <button class="chip" data-v="10" aria-pressed="false">Khối 10</button>
+      <button class="chip" data-v="11" aria-pressed="false">Khối 11</button>
+      <button class="chip" data-v="12" aria-pressed="false">Khối 12</button>
+      <button class="chip" data-v="0" aria-pressed="false">Dùng chung</button>
+      <button class="chip" data-v="bat" aria-pressed="false">Đang phát</button>
+    </div>
+    <p class="hint" id="th-dem"></p>
+  </div>
   <div id="th-list" class="plain"></div>
   </div>
  </div>
